@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Misc
+import json
 import re
 import time
 from collections import Counter
@@ -19,6 +20,7 @@ from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn import svm
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import confusion_matrix
 
 # NLTK
 from nltk.corpus import stopwords
@@ -29,7 +31,7 @@ DATASET_COLUMNS = ['target', 'ids', 'date', 'flag', 'user', 'text']
 DATASET_ENCODING = 'ISO-8859-1'
 TRAIN_SIZE = 0.8
 
-TWEET_CLEANING_RE = "@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+"
+TWEET_CLEANING_RE = r'@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+'
 
 decode_map = {
     0: 'NEGATIVE',
@@ -38,8 +40,9 @@ decode_map = {
 }
 
 # Read in Sentiment140
-df = pd.read_csv('training.1600000.processed.noemoticon.csv', encoding = DATASET_ENCODING , names = DATASET_COLUMNS)
-df = df.sample(frac = 0.1) 
+# https://www.kaggle.com/kazanova/sentiment140
+df = pd.read_csv('ML/training.1600000.processed.noemoticon.csv', encoding = DATASET_ENCODING , names = DATASET_COLUMNS)
+df = df.sample(frac = 0.002) 
 print(df.head())
 print(df.dtypes)
 
@@ -83,28 +86,27 @@ df.text = df.text.apply(lambda x: preprocess(x))
 print(df.head())
 
 # -----------------------------------------------------------------------------------------
-# Scale the data to [-1, 1] in order to increase SVM speed
-# scaling = MinMaxScaler(feature_range = (-1,1)).fit(X_train)
-# X_train = scaling.transform(X_train)
-# X_test = scaling.transform(X_test)
+# Vectorize
+
+vectorizer = TfidfVectorizer(sublinear_tf = True, use_idf = True)
+X = vectorizer.fit_transform(df['text']).toarray()
 
 # -----------------------------------------------------------------------------------------
 # Split the data into testing and training
 
-df_train, df_test = train_test_split(df, test_size = 1 - TRAIN_SIZE, random_state = 69)
-print('Length:\n\tData: {}\n\tTrain: {}\n\tTest: {}\n'.format(len(df), len(df_train), len(df_test)))
+X_train, X_test, y_train, y_test = train_test_split(X, df['target'], test_size = 1 - TRAIN_SIZE, random_state = 69)
+# print('Length:\n\tData: {}\n\tTrain: {}\n\tTest: {}\n'.format(len(df), len(df_train), len(df_test)))
 
 # -----------------------------------------------------------------------------------------
 # Vectorize
 
-vectorizer = TfidfVectorizer(min_df = 5,
-    max_df = 0.8, sublinear_tf = True, use_idf = True)
+# vectorizer = TfidfVectorizer(sublinear_tf = True, use_idf = True)
 
-train_vectors = vectorizer.fit_transform(df_train['text'])
-test_vectors = vectorizer.fit_transform(df_test['text'])
+# train_vectors = vectorizer.fit_transform(df_train['text'])
+# test_vectors = vectorizer.fit_transform(df_test['text'])
 
-print(test_vectors)
-print(test_vectors.shape)
+# print(test_vectors)
+# print(test_vectors.shape)
 
 # ---------------------------------------------
 # Hash THEN vectorize 
@@ -121,10 +123,27 @@ print(test_vectors.shape)
 # Create a linear SVM model
 
 classifier_linear = svm.SVC(kernel = 'linear')
-classifier_linear.fit(train_vectors, df_train['target'])
-prediction_linear = classifier_linear.predict(test_vectors)
+classifier_linear.fit(X_train, y_train)
+prediction_linear = classifier_linear.predict(X_test)
 
-report = classification_report(df_test['target'], prediction_linear, output_dict = True)
+report = classification_report(y_test, prediction_linear, output_dict = True)
+print(json.dumps(report, indent = 2))
 
-print('positive: ', report['pos'])
-print('negative: ', report['neg'])
+
+cm = confusion_matrix(y_test, prediction_linear)
+print(cm)
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt     
+
+ax= plt.subplot()
+sns.heatmap(cm, annot = True, ax = ax, fmt = 'g') #annot = True to annotate cells
+
+# labels, title and ticks
+ax.set_xlabel('Predicted labels')
+ax.set_ylabel('True labels')
+ax.set_title('Confusion Matrix')
+ax.xaxis.set_ticklabels(['business', 'health']) 
+ax.yaxis.set_ticklabels(['health', 'business'])
+plt.show()
