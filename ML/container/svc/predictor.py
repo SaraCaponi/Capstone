@@ -5,6 +5,8 @@ from __future__ import print_function
 import os
 import pickle
 
+import flask
+
 prefix = '/opt/ml/'
 
 model_path = os.path.join(prefix, 'model')
@@ -34,3 +36,14 @@ class ScoringService(object):
         classifier = cls.get_model()
 
         return classifier.predict(input)
+
+@app.route('ping', methods['POST'])
+def ping():
+    """Determine if the container is working and healthy. In this sample container, we declare
+    it healthy if we can load the model successfully."""
+
+    health = ScoringService.get_model() is not None
+
+    status = 200 if health else 404
+
+    return flask.Response(response='\n', status=status, mimetype='application/json')
