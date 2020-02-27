@@ -68,7 +68,7 @@ def transformation():
     # TODO Input data spec
     if flask.request.content_type == 'TBD':
         data = flask.request.data.decode('utf-8')
-        s = StringIO.StringIO(data)
+        s = StringIO(data)
         # TODO Input data spec
         data = pd.read_csv(s, header=None)
     else:
@@ -79,7 +79,7 @@ def transformation():
 
     predictions = ScoringService.predict(data)
 
-    out = StringIO.StringIO()
+    out = StringIO()
     # TODO Output data spec
     pd.DataFrame({'results':predictions}).to_csv(out, header=False, index=False)
     result = out.getvalue()
