@@ -1,6 +1,8 @@
 # Daniel Jaegers
 # Created on 2/2/2020
 
+# TODO Move all of this into a notebook rather than a script!
+
 # DataFrame
 import pandas as pd
 
@@ -42,7 +44,7 @@ decode_map = {
 # https://www.kaggle.com/kazanova/sentiment140
 df = pd.read_csv('ML/data/training.1600000.processed.noemoticon.csv',
                  encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
-df = df.sample(frac=0.002)
+df = df.sample(frac=0.003)
 print(df.head())
 print(df.dtypes)
 
@@ -101,17 +103,22 @@ pipeline = Pipeline([
     ('clf', SVC())
 ])
 
+# TODO TfIdf preprocessor step?
+
 param_grid = [
     {
+        'tfidf__use_idf': [True, False],
+        'tfidf__smooth_idf': [True, False],
+        'tfidf__sublinear_tf': [True, False],
         'clf__kernel': ['linear'],
         'clf__C': [x * 0.1 for x in range(1, 20)]
     },
-    {
-        'clf__kernel': ['poly'],
-        'clf__C': [x * 0.1 for x in range(1, 20)],
-        'clf__gamma': ['scale', 'auto'],
-        'clf__degree': [2, 3, 4, 5]
-    }
+    # {
+    #     'clf__kernel': ['poly'],
+    #     'clf__C': [x * 0.1 for x in range(1, 20)],
+    #     'clf__gamma': ['scale', 'auto'],
+    #     'clf__degree': [2, 3, 4, 5]
+    # }
 ]
 
 
