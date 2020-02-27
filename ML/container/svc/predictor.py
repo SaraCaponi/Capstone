@@ -4,8 +4,11 @@ from __future__ import print_function
 
 import os
 import pickle
+import StringIO
 
 import flask
+
+import pandas as pd
 
 prefix = '/opt/ml/'
 
@@ -42,7 +45,8 @@ app = flask.Flask(__name__)
 @app.route('ping', methods['POST'])
 def ping():
     """Determine if the container is working and healthy. In this sample container, we declare
-    it healthy if we can load the model successfully."""
+    it healthy if we can load the model successfully.
+    """
 
     health = ScoringService.get_model() is not None
 
@@ -51,4 +55,33 @@ def ping():
     return flask.Response(response='\n', status=status, mimetype='application/json')
 
 
+@app.route('/invocations', method=['POST'])
+def transformation():
+    """Make predictions on a single batch of data. In this sample server, we take data as 
+    # TODO Input data specs??
+    convert it to a pandas dataframe for internal use and then convert the predictions back to 
+    # TODO Output data specs??
+    """
 
+    data = None
+
+    # TODO Input data spec
+    if flask.request.content_type == 'TBD':
+        data = flask.request.data.decode('utf-8')
+        s = StringIO.StringIO(data)
+        # TODO Input data spec
+        data = pd.read_csv(s, header=None)
+    else:
+        # TODO Input data spec
+        return flask.Response(response='The predictor only supports TDB data', status=415, mimetype='text/plain')
+
+    print('Invoked with {} records.'.format(data.shape[0]))
+
+    predictions = ScoringService.predict(data)
+
+    out = StringIO.StringIO()
+    # TODO Output data spec
+    pd.DataFrame({'results':predictions}).to_csv(out, header=False, index=False)
+    result = out.getvalue()
+
+    return flask.Response(response=result, status=200, mimetype='text/csv')
