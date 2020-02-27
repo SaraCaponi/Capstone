@@ -14,13 +14,12 @@ import time
 from collections import Counter
 
 # Scikit-learn
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import HashingVectorizer
-from sklearn import svm
-from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.feature_extraction.text import TfidfVectorizer, HashingVectorizer
+from sklearn.svm import SVC
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import confusion_matrix
+from sklearn.pipeline import Pipeline
 
 # NLTK
 from nltk.corpus import stopwords
@@ -41,16 +40,19 @@ decode_map = {
 
 # Read in Sentiment140
 # https://www.kaggle.com/kazanova/sentiment140
-df = pd.read_csv('ML/training.1600000.processed.noemoticon.csv', encoding = DATASET_ENCODING , names = DATASET_COLUMNS)
-df = df.sample(frac = 0.002) 
+df = pd.read_csv('ML/data/training.1600000.processed.noemoticon.csv',
+                 encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
+df = df.sample(frac=0.002)
 print(df.head())
 print(df.dtypes)
 
 # ------------------------------------------------------------------------------------
 # Map the target integer to a category
 
+
 def decode_sentiment(label):
     return decode_map[int(label)]
+
 
 df.target = df.target.apply(lambda x: decode_sentiment(x))
 print(df.head())
@@ -71,6 +73,7 @@ print(df.target.unique())
 stop_words = stopwords.words("english")
 stemmer = SnowballStemmer("english")
 
+
 def preprocess(text, stem=False):
     text = re.sub(TWEET_CLEANING_RE, ' ', str(text).lower()).strip()
     tokens = []
@@ -82,19 +85,59 @@ def preprocess(text, stem=False):
                 tokens.append(token)
     return " ".join(tokens)
 
+
 df.text = df.text.apply(lambda x: preprocess(x))
 print(df.head())
+
+
+# -----------------------------------------------------------------------------------
+# Pipeline
+
+X_train, X_test, y_train, y_test = train_test_split(
+    df['text'], df['target'], test_size=1 - TRAIN_SIZE, random_state=69)
+
+pipeline = Pipeline([
+    ('tfidf', TfidfVectorizer()),
+    ('clf', SVC())
+])
+
+param_grid = [
+    {
+        'clf__kernel': ['linear'],
+        'clf__C': [x * 0.1 for x in range(1, 20)]
+    },
+    {
+        'clf__kernel': ['poly'],
+        'clf__C': [x * 0.1 for x in range(1, 20)],
+        'clf__gamma': ['scale', 'auto'],
+        'clf__degree': [2, 3, 4, 5]
+    }
+]
+
+
+grid = GridSearchCV(pipeline, cv=3, param_grid=param_grid)
+grid.fit(X_train, y_train)
+
+# summarize results
+print("Best: %f using %s" % (grid.best_score_,
+                             grid.best_params_))
+means = grid.cv_results_['mean_test_score']
+stds = grid.cv_results_['std_test_score']
+params = grid.cv_results_['params']
+for mean, stdev, param in zip(means, stds, params):
+    print("%f (%f) with: %r" % (mean, stdev, param))
+
 
 # -----------------------------------------------------------------------------------------
 # Vectorize
 
-vectorizer = TfidfVectorizer(sublinear_tf = True, use_idf = True)
-X = vectorizer.fit_transform(df['text']).toarray()
+# vectorizer = TfidfVectorizer(sublinear_tf = True, use_idf = True)
+# X = vectorizer.fit_transform(df['text']).toarray()
 
 # -----------------------------------------------------------------------------------------
 # Split the data into testing and training
 
-X_train, X_test, y_train, y_test = train_test_split(X, df['target'], test_size = 1 - TRAIN_SIZE, random_state = 69)
+# X_train, X_test, y_train, y_test = train_test_split(X, df['target'], test_size = 1 - TRAIN_SIZE, random_state = 69)
 # print('Length:\n\tData: {}\n\tTrain: {}\n\tTest: {}\n'.format(len(df), len(df_train), len(df_test)))
 
 # -----------------------------------------------------------------------------------------
@@ -109,7 +152,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, df['target'], test_size =
 # print(test_vectors.shape)
 
 # ---------------------------------------------
-# Hash THEN vectorize 
+# Hash THEN vectorize
 
 # vectorizer = HashingVectorizer(verbose=True)
 # train_vectors = vectorizer.fit_transform(df_train['text'])
@@ -122,28 +165,28 @@ X_train, X_test, y_train, y_test = train_test_split(X, df['target'], test_size =
 # ----------------------------------------------------------------------------------------
 # Create a linear SVM model
 
-classifier_linear = svm.SVC(kernel = 'linear')
-classifier_linear.fit(X_train, y_train)
-prediction_linear = classifier_linear.predict(X_test)
+# classifier_linear = SVC(kernel = 'linear')
+# classifier_linear.fit(X_train, y_train)
+# prediction_linear = classifier_linear.predict(X_test)
 
-report = classification_report(y_test, prediction_linear, output_dict = True)
-print(json.dumps(report, indent = 2))
-
-
-cm = confusion_matrix(y_test, prediction_linear)
-print(cm)
+# report = classification_report(y_test, prediction_linear, output_dict = True)
+# print(json.dumps(report, indent = 2))
 
 
-import seaborn as sns
-import matplotlib.pyplot as plt     
+# cm = confusion_matrix(y_test, prediction_linear)
+# print(cm)
 
-ax= plt.subplot()
-sns.heatmap(cm, annot = True, ax = ax, fmt = 'g') #annot = True to annotate cells
 
-# labels, title and ticks
-ax.set_xlabel('Predicted labels')
-ax.set_ylabel('True labels')
-ax.set_title('Confusion Matrix')
-ax.xaxis.set_ticklabels(['business', 'health']) 
-ax.yaxis.set_ticklabels(['health', 'business'])
-plt.show()
+# import seaborn as sns
+# import matplotlib.pyplot as plt
+
+# ax= plt.subplot()
+# sns.heatmap(cm, annot = True, ax = ax, fmt = 'g') #annot = True to annotate cells
+
+# # labels, title and ticks
+# ax.set_xlabel('Predicted labels')
+# ax.set_ylabel('True labels')
+# ax.set_title('Confusion Matrix')
+# ax.xaxis.set_ticklabels(['business', 'health'])
+# ax.yaxis.set_ticklabels(['health', 'business'])
+# plt.show()
