@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import os
 import pickle
-import StringIO
+from io import StringIO
 
 import flask
 
@@ -42,7 +42,7 @@ class ScoringService(object):
 
 app = flask.Flask(__name__)
 
-@app.route('ping', methods['POST'])
+@app.route('ping', methods=['POST'])
 def ping():
     """Determine if the container is working and healthy. In this sample container, we declare
     it healthy if we can load the model successfully.
@@ -55,7 +55,7 @@ def ping():
     return flask.Response(response='\n', status=status, mimetype='application/json')
 
 
-@app.route('/invocations', method=['POST'])
+@app.route('/invocations', methods=['POST'])
 def transformation():
     """Make predictions on a single batch of data. In this sample server, we take data as 
     # TODO Input data specs??
