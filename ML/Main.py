@@ -44,7 +44,10 @@ decode_map = {
 # https://www.kaggle.com/kazanova/sentiment140
 df = pd.read_csv('ML/data/training.1600000.processed.noemoticon.csv',
                  encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
-df = df.sample(frac=0.003)
+
+# TODO Ensure that pos/neg ratio is 1:1
+# The only reason that I am doing this is because my computer can't handle the full dataset
+df = df.sample(frac=0.01)
 print(df.head())
 print(df.dtypes)
 
@@ -75,7 +78,7 @@ print(df.target.unique())
 stop_words = stopwords.words("english")
 stemmer = SnowballStemmer("english")
 
-
+# TODO Adjust preprocessor to be better
 def preprocess(text, stem=False):
     text = re.sub(TWEET_CLEANING_RE, ' ', str(text).lower()).strip()
     tokens = []
