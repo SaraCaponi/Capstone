@@ -1,3 +1,72 @@
 #!/usr/bin/env python
 
 # Training component
+# Trains a scikit-learn SVC
+# TODO What is my data format?
+# Input is specified as ????
+
+from __future__ import print_function
+
+import os
+import json
+import pickle
+import sys
+import traceback
+
+import pandas as pd
+
+prefix = '/opt/ml/'
+
+input_path = prefix + 'input/data'
+output_path = os.path.join(prefix, 'output')
+model_path = os.path.join(prefix, 'model')
+param_path = os.path.join(prefix, 'input/config/hyperparameter.json')
+
+channel_name = 'training'
+training_path = os.path.join(input_path, channel_name)
+
+
+def train():
+    print('Starting the training.')
+
+    try:
+        # Read in any hyperparameters
+        with open(param_path, 'r') as f:
+            training_params = json.load(f)
+
+        # Take the set of tiles and read them all into a single pandas dataframe
+        input_files = [os.path.join(training_path, file)
+                       for file in os.listdir(training_path)]
+        if len(input_files) == 0:
+            raise ValueError({'error': 'There are no files in {}. This usually indicates that the channel ({}) was incorrectly specified, the data specification in S3 was incorrectly specified or the role specified does not have permission to access the data.'.format(training_path, channel_name)})
+
+        # TODO Decide what the input format is
+        # Maybe read as JSON, don't know yet
+        # raw_data = [pd.read_csv(file, header=None) for file in input_files]
+
+        # TODO Finish writing the SVC process
+
+        # TODO Save the model
+
+        print('Training complete')
+    except Exception as e:
+        # Write out an error file.
+        # This will be returned as the failureReason in the DescribeTrainingJob result.
+        trc = traceback.format_exc()
+
+        with open(os.path.join(output_path, 'failure'), 'w') as f:
+            f.write('Exception during training: ' + str(e) + '\n' + trc)
+
+        # Printing this causes the expection to be in the training job logs too
+        print('Exception during training: ' +
+              str(e) + '\n' + trc, file=sys.stderr)
+
+        # A non-zero exit code causes the training job to be marked as Failed.
+        sys.exit(255)
+
+
+if __name__ == '__main__':
+    train()
+
+    # A zero exit code causes the job to be marked as Succeeded.
+    sys.exit(0)
