@@ -37,6 +37,8 @@ class ScoringService(object):
 
         return classifier.predict(input)
 
+app = flask.Flask(__name__)
+
 @app.route('ping', methods['POST'])
 def ping():
     """Determine if the container is working and healthy. In this sample container, we declare
@@ -47,3 +49,6 @@ def ping():
     status = 200 if health else 404
 
     return flask.Response(response='\n', status=status, mimetype='application/json')
+
+
+
