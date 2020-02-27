@@ -22,3 +22,15 @@ class ScoringService(object):
                 cls.model = pickle.load(f)
 
         return cls.model
+
+    @classmethod
+    def predict(cls, input):
+        """For the input, make and return the predictions.
+
+        Args:
+            input (a pandas dataframe): The data on which to make the predictions. 
+                There will be one prediction per row in the dataframe."""
+
+        classifier = cls.get_model()
+
+        return classifier.predict(input)
