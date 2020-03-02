@@ -25,6 +25,9 @@ param_path = os.path.join(prefix, 'input/config/hyperparameter.json')
 channel_name = 'training'
 training_path = os.path.join(input_path, channel_name)
 
+def preprocess(x):
+    # TODO Add preprocessor
+
 
 def train():
     print('Starting the training.')
@@ -43,6 +46,8 @@ def train():
         # TODO Decide what the input format is
         # Maybe read as JSON, don't know yet
         # raw_data = [pd.read_csv(file, header=None) for file in input_files]
+
+        # TODO Preprocess the data
 
         # TODO Finish writing the SVC process
 
