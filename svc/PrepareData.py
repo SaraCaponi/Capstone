@@ -18,11 +18,11 @@ bucket = sess.default_bucket()
 print('Using bucket ' + bucket)
 
 # Read the data locally
-df = pd.read_csv('training.1600000.processed.noemoticon.csv',
+df = pd.read_csv('svc/training.1600000.processed.noemoticon.csv',
                  encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
 
 # TODO This is bad, do better
-df = df.sample(frac=0.02)
+df = df.sample(frac=0.2)
 
 # TODO Ensure an even split of pos/neg?
 X_train, X_test, y_train, y_test = train_test_split(
