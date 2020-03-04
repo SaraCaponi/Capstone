@@ -106,6 +106,9 @@ if __name__ == '__main__':
     train_df = pd.read_csv(os.path.join(args.train, args.train_file))
     test_df = pd.read_csv(os.path.join(args.test, args.test_file))
 
+    print('Length of train_df: {}'.format(str(len(train_df.index))))
+    print('Length of test_df: {}'.format(str(len(test_df.index))))
+
     print('Preprocessing the Tweets')
     # Decode Sentiment/Target
     train_df.target = train_df.target.apply(lambda x: decode_sentiment(x))
