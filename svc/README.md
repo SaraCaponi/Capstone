@@ -6,6 +6,11 @@ Include:
 * How to invoke the deployed model
 * Hyperparameter tuning results
 
+#### Training Locally
+```console
+python svc.py --model-dir ./ --train ./ --test ./
+```
+
 #### Hyperparameter Tuning
 ##### 2020/03/03
 * 0.1 of the total data set.
