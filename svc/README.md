@@ -6,6 +6,8 @@ TODO How to invoke the deployed model
 
 TODO Hyperparameter tuning results
 
+TODO Model validation metrics
+
 #### Training Locally
 ```console
 python svc.py --model-dir ./ --train ./ --test ./
