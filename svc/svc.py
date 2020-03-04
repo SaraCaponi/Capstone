@@ -1,7 +1,9 @@
 import argparse
 import os
 import re
+from io import StringIO
 
+import numpy as np
 import pandas as pd
 
 import joblib
@@ -52,14 +54,14 @@ def model_fn(model_dir):
 def input_fn(request_body, request_content_type):
     """An input_fun tat loads a pickled numpy array"""
     if request_content_type == "application/python-pickle":
-        array = np.load(StringIO(request_body)) 
+        array = np.load(StringIO(request_body))
         return array
     else:
         # TODO Handle other content-types here or raise an Exception if the content type is not supported
         pass
 
 
-def predict_fn(finput_data, model):
+def predict_fn(input_data, model):
     prediction = model.predict(input_data)
     # TODO Definitely need preprocessing
     pred_prob = model.predict_proba(input_data)
