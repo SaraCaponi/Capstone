@@ -8,6 +8,17 @@ TODO Hyperparameter tuning results
 
 TODO Model validation metrics
 
+#### Notes For Me
+TODO Exploration
+* Finalize project structure
+* ngrams?
+* VADER
+* Confidence values
+* scikit learn
+    * LinearSVC
+    * SGDClassifier
+* Handle words with repetitive characters such as 'sweeeeeeeet'
+
 #### Training Locally
 ```console
 python svc.py --model-dir ./ --train ./ --test ./
