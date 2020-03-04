@@ -1,3 +1,5 @@
+# TODO Move this into a notebook rather than a script?
+
 import boto3
 import sagemaker
 
