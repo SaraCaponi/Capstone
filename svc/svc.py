@@ -30,7 +30,7 @@ def decode_sentiment(label):
     return decode_map[int(label)]
 
 
-# Adjuct preprocessor to be better
+# Adjust preprocessor to be better
 def preprocess(text, stem=False):
     text = re.sub(TWEET_CLEANING_RE, ' ', str(text).lower()).strip()
     tokens = []
@@ -51,9 +51,9 @@ def model_fn(model_dir):
 # What is my input format?
 def input_fn(request_body, request_content_type):
     """An input_fun tat loads a pickled numpy array"""
-    if request_content_type == "application/python-pickle"
-    array = np.load(StringIO(request_body))
-    return array
+    if request_content_type == "application/python-pickle":
+        array = np.load(StringIO(request_body)) 
+        return array
     else:
         # TODO Handle other content-types here or raise an Exception if the content type is not supported
         pass
