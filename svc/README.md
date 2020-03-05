@@ -19,6 +19,11 @@ TODO Exploration
     * SGDClassifier
 * Handle words with repetitive characters such as 'sweeeeeeeet'
 
+#### Prepare Data
+Assuming that your Python directory is rooted at Capstone.
+```console
+python svc/PrepareData.py --sample SAMPLE_PERCENTAGE
+```
 #### Training Locally
 Assuming that your Python directory is rooted at Capstone. 
 ```console

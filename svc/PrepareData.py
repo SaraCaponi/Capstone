@@ -1,5 +1,4 @@
-# TODO Move this into a notebook rather than a script?
-
+import argparse
 import boto3
 import sagemaker
 
@@ -23,8 +22,11 @@ print('Using bucket ' + bucket)
 df = pd.read_csv('svc/training.1600000.processed.noemoticon.csv',
                  encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
 
-# TODO This is bad, do better
-df = df.sample(frac=0.005)
+# Read the sample percentage from the command line
+parser = argparse.ArgumentParser()
+parser.add_argument('--sample', type=float, default=0.005)
+args, _ = parser.parse_known_args()
+df = df.sample(frac=args.sample)
 
 # TODO Ensure an even split of pos/neg?
 X_train, X_test, y_train, y_test = train_test_split(
