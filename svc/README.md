@@ -1,7 +1,5 @@
 TODO How to train, test, and deploy the model both locally and to SageMaker.
 
-TODO Input/Output specifications
-
 TODO How to invoke the deployed model
 
 TODO Hyperparameter tuning results
@@ -45,11 +43,22 @@ python svc/svc.py --model-dir svc/ --train svc/ --test svc/
 
 ```json
 {
-    "tweet": ["tweet1", "tweet2", "tweet3", ...]
+    "tweet": [tweet, ...]
 }
 ```
 
 ##### Output
+
+```json
+{
+    "results": [
+        {
+            "prediction": "NEGATIVE" | "POSITIVE",
+            "probability": [probability_of_negative, probability_of_positive]
+        }
+    ]
+}
+```
 
 #### Hyperparameter Tuning
 
