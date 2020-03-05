@@ -1,11 +1,3 @@
-TODO How to train, test, and deploy the model both locally and to SageMaker.
-
-TODO How to invoke the deployed model
-
-TODO Hyperparameter tuning results
-
-TODO Model validation metrics
-
 #### Notes For Me
 
 TODO Exploration
@@ -20,9 +12,11 @@ TODO Exploration
 - Handle words with repetitive characters such as 'sweeeeeeeet'
 
 #### Training Data
+
 [Sentiment140 - 1.6 million tweets](https://www.kaggle.com/kazanova/sentiment140 "Kaggle")
 
 Relevant Columns
+
 - **target**: the polarity of the tweet (0 = negative, 4 = positive)
 - **text**: the text of the tweet
 
@@ -34,13 +28,29 @@ Assuming that your Python directory is rooted at Capstone.
 python svc/PrepareData.py --sample SAMPLE_PERCENTAGE
 ```
 
-#### Training Locally
+#### Training
+
+##### Locally
+
+TODO Document how to use hyperparameters
 
 Assuming that your Python directory is rooted at Capstone.
 
 ```console
 python svc/svc.py --model-dir svc/ --train svc/ --test svc/
 ```
+
+##### On SageMaker
+
+TODO Document how to train on SageMaker
+
+#### Validating the Model
+
+TODO Model validation metrics
+
+### Invoking the Deployed Model
+
+TODO Document how to invoke the deployed model
 
 #### Input and Output Specifications
 
@@ -56,16 +66,18 @@ python svc/svc.py --model-dir svc/ --train svc/ --test svc/
 
 ```json
 {
-    "results": [
-        {
-            "prediction": "NEGATIVE" | "POSITIVE",
-            "probability": [probability_of_negative, probability_of_positive]
-        }
-    ]
+  "results": [
+    {
+      "prediction": "NEGATIVE" | "POSITIVE",
+      "probability": [probability_of_negative, probability_of_positive]
+    }
+  ]
 }
 ```
 
 #### Hyperparameter Tuning
+
+TODO Hyperparameter tuning results
 
 ##### 2020/03/03
 
