@@ -66,9 +66,16 @@ def input_fn(request_body, request_content_type):
 
 def predict_fn(input_data, model):
     pred = model.predict(input_data)
-    # TODO Definitely need preprocessing
     pred_prob = model.predict_proba(input_data)
-    return np.array([pred, pred_prob])
+
+    predictions = []
+    for p, pp in zip(pred, pred_prob):
+        predictions.append({
+            'prediction': p,
+            'probability': pp
+        })
+
+    return {'results': predictions}
 
 
 def output_fn(prediction, content_type):
@@ -142,12 +149,9 @@ if __name__ == '__main__':
 
     print('Print validation statistics')
     pred = clf.predict(X_test)
-    # pred_proba = clf.predict_proba(X_test)
+    # pred_prob = clf.predict_proba(X_test)
 
-    print(pred)
-    # print(pred_proba)
-
-    # TODO WHy the fuck are these the same?
+    # TODO Why the fuck are these the same?
     print('Accuracy: {}'.format(accuracy_score(y_test, pred)))
     # print('Precision: {}'.format(precision_score(y_test, pred, average='macro')))
     # print('Recall: {}'.format(recall_score(y_test, pred, average='micro')))
