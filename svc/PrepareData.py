@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 # Loads of constants
-DATASET_COLUMNS = ['target', 'ids', 'date', 'flag', 'user', 'text']
+DATASET_COLUMNS = ['target', 'ids', 'date', 'flag', 'user', 'tweet']
 DATASET_ENCODING = 'ISO-8859-1'
 TRAIN_SIZE = 0.8
 
@@ -30,12 +30,12 @@ df = df.sample(frac=args.sample)
 
 # Split the data into train/test sets
 X_train, X_test, y_train, y_test = train_test_split(
-    df['text'], df['target'], test_size=1 - TRAIN_SIZE, random_state=69)
+    df['tweet'], df['target'], test_size=1 - TRAIN_SIZE, random_state=69)
 
-trainX = pd.DataFrame(X_train, columns=['text'])
+trainX = pd.DataFrame(X_train, columns=['tweet'])
 trainX['target'] = y_train
 
-testX = pd.DataFrame(X_test, columns=['text'])
+testX = pd.DataFrame(X_test, columns=['tweet'])
 testX['target'] = y_test
 
 # Save the train_test_split locally

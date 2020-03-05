@@ -8,32 +8,56 @@ TODO Hyperparameter tuning results
 
 TODO Model validation metrics
 
+TODO Document training dataset target and stuff
+
 #### Notes For Me
+
 TODO Exploration
-* Finalize project structure
-* ngrams?
-* VADER
-* Confidence values
-* scikit learn
-    * LinearSVC
-    * SGDClassifier
-* Handle words with repetitive characters such as 'sweeeeeeeet'
+
+- Finalize project structure
+- ngrams?
+- VADER
+- Confidence values
+- scikit learn
+  - LinearSVC
+  - SGDClassifier
+- Handle words with repetitive characters such as 'sweeeeeeeet'
 
 #### Prepare Data
+
 Assuming that your Python directory is rooted at Capstone.
+
 ```console
 python svc/PrepareData.py --sample SAMPLE_PERCENTAGE
 ```
+
 #### Training Locally
-Assuming that your Python directory is rooted at Capstone. 
+
+Assuming that your Python directory is rooted at Capstone.
+
 ```console
 python svc/svc.py --model-dir svc/ --train svc/ --test svc/
 ```
 
+#### Input and Output Specifications
+
+##### Input
+
+```json
+{
+    "tweet": ["tweet1", "tweet2", "tweet3", ...]
+}
+```
+
+##### Output
+
 #### Hyperparameter Tuning
+
 ##### 2020/03/03
-* 0.1 of the total data set
-* Default hyperparameters
+
+- 0.1 of the total data set
+- Default hyperparameters
+
 ```console
 PS C:\Users\jaege\Desktop\SVM> python training.py --model-dir ./ --train ./ --test ./
 Extracting arguments
@@ -44,11 +68,13 @@ Print validation statistics
 Accuracy Score: 0.76628125
 Score: 0.76628125
 Save the model
-````
+```
 
 ##### 2020/03/04
-* 0.2 of the total data set
-* Default hyperparameters
+
+- 0.2 of the total data set
+- Default hyperparameters
+
 ```console
 PS C:\Users\TSO7416\Desktop\Capstone\svc> python svc.py --model-dir ./ --train ./ --test ./
 Extracting arguments
@@ -64,4 +90,3 @@ Precision: 0.7717396683801709
 Recall: 0.77115625
 Save the model
 ```
-

@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import re
 from io import StringIO
@@ -33,10 +34,11 @@ def decode_sentiment(label):
 
 
 # Adjust preprocessor to be better
-def preprocess(text, stem=False):
-    text = re.sub(TWEET_CLEANING_RE, ' ', str(text).lower()).strip()
+def preprocess(tweet, stem=False):
+    """Preprocesses one tweet"""
+    tweet = re.sub(TWEET_CLEANING_RE, ' ', str(tweet).lower()).strip()
     tokens = []
-    for token in text.split():
+    for token in tweet.split():
         if token not in stop_words:
             if stem:
                 tokens.append(stemmer.stem(token))
@@ -46,26 +48,27 @@ def preprocess(text, stem=False):
 
 
 def model_fn(model_dir):
-    clf = joblib.load(os.path.join(model_dir, "model.joblib"))
+    clf = joblib.load(os.path.join(model_dir, 'model.joblib'))
     return clf
 
 
-# What is my input format?
 def input_fn(request_body, request_content_type):
-    """An input_fun tat loads a pickled numpy array"""
-    if request_content_type == "application/python-pickle":
-        array = np.load(StringIO(request_body))
-        return array
+    """An input_fun that loads JSON into a Pandas DataFrame, and preprocesses the tweets"""
+    if request_content_type == "application/json":
+        df = pd.read_json(StringIO(request_body))
+        # TODO Add way to provide stem parameter
+        df.tweet = train_df.tweet.apply(lambda x: preprocess(x))
+        return df
     else:
-        # TODO Handle other content-types here or raise an Exception if the content type is not supported
-        pass
+        raise ValueError(
+            '{} is not supported by script!'.format(request_content_type))
 
 
 def predict_fn(input_data, model):
-    prediction = model.predict(input_data)
+    pred = model.predict(input_data)
     # TODO Definitely need preprocessing
     pred_prob = model.predict_proba(input_data)
-    return np.array([prediction, pred_prob])
+    return np.array([pred, pred_prob])
 
 
 def output_fn(prediction, content_type):
@@ -101,8 +104,6 @@ if __name__ == '__main__':
 
     args, _ = parser.parse_known_args()
 
-    # Load from args.train and args.test, train a model, write model to args.model_dir
-
     print('Reading Tweets')
     train_df = pd.read_csv(os.path.join(args.train, args.train_file))
     test_df = pd.read_csv(os.path.join(args.test, args.test_file))
@@ -116,17 +117,14 @@ if __name__ == '__main__':
     test_df.target = test_df.target.apply(lambda x: decode_sentiment(x))
 
     # Preprocess Tweet
-    train_df.text = train_df.text.apply(lambda x: preprocess(x, args.stem))
-    test_df.text = test_df.text.apply(lambda x: preprocess(x, args.stem))
+    train_df.tweet = train_df.tweet.apply(lambda x: preprocess(x, args.stem))
+    test_df.tweet = test_df.tweet.apply(lambda x: preprocess(x, args.stem))
 
     print('Building training and testing datasets')
-    X_train = train_df['text']
+    X_train = train_df['tweet']
     y_train = train_df['target']
-    X_test = test_df['text']
+    X_test = test_df['tweet']
     y_test = test_df['target']
-
-    # print(X_train.head())
-    # print(y_train.head())
 
     # TODO TfIdf preprocessor?
 
@@ -144,15 +142,15 @@ if __name__ == '__main__':
 
     print('Print validation statistics')
     pred = clf.predict(X_test)
-    pred_proba = clf.predict_proba(X_test)
+    # pred_proba = clf.predict_proba(X_test)
 
     print(pred)
-    print(pred_proba)
+    # print(pred_proba)
 
     # TODO WHy the fuck are these the same?
     print('Accuracy: {}'.format(accuracy_score(y_test, pred)))
-    print('Precision: {}'.format(precision_score(y_test, pred, average='macro')))
-    print('Recall: {}'.format(recall_score(y_test, pred, average='micro')))
+    # print('Precision: {}'.format(precision_score(y_test, pred, average='macro')))
+    # print('Recall: {}'.format(recall_score(y_test, pred, average='micro')))
     # TODO Add more validation statistics
 
     print('Save the model')
