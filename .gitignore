@@ -1,8 +1,10 @@
 # VSCode 
 *.code-workspace
 
-# Training/Testing Data
-training.1600000.processed.noemoticon.csv
+# Data and Models
+*.csv
+*.joblib
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
