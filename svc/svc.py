@@ -62,7 +62,7 @@ def input_fn(request_body, request_content_type):
     if request_content_type == "application/json":
         df = pd.read_json(StringIO(request_body))
         # TODO Add way to provide stem parameter
-        df.tweet = train_df.tweet.apply(lambda x: preprocess(x))
+        df.tweet = df.tweet.apply(lambda x: preprocess(x))
         return df
     else:
         raise ValueError(
