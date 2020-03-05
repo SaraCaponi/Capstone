@@ -20,8 +20,9 @@ TODO Exploration
 * Handle words with repetitive characters such as 'sweeeeeeeet'
 
 #### Training Locally
+Assuming that your Python directory is rooted at Capstone. 
 ```console
-python svc.py --model-dir ./ --train ./ --test ./
+python svc/svc.py --model-dir svc/ --train svc/ --test svc/
 ```
 
 #### Hyperparameter Tuning

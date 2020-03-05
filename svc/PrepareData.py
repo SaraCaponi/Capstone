@@ -24,7 +24,7 @@ df = pd.read_csv('svc/training.1600000.processed.noemoticon.csv',
                  encoding=DATASET_ENCODING, names=DATASET_COLUMNS)
 
 # TODO This is bad, do better
-df = df.sample(frac=0.2)
+df = df.sample(frac=0.005)
 
 # TODO Ensure an even split of pos/neg?
 X_train, X_test, y_train, y_test = train_test_split(
@@ -37,16 +37,16 @@ testX = pd.DataFrame(X_test, columns=['text'])
 testX['target'] = y_test
 
 # Save the train_test_split locally
-trainX.to_csv('twitter_train.csv', index=False)
-testX.to_csv('twitter_test.csv', index=False)
+trainX.to_csv('svc/twitter_train.csv', index=False)
+testX.to_csv('svc/twitter_test.csv', index=False)
 
 # Send data to S3. SageMaker will take training data from S3
 trainpath = sess.upload_data(
-    path='twitter_train.csv', bucket=bucket,
+    path='svc/twitter_train.csv', bucket=bucket,
     key_prefix='data/twitter')
 
 testpath = sess.upload_data(
-    path='twitter_test.csv', bucket=bucket,
+    path='svc/twitter_test.csv', bucket=bucket,
     key_prefix='data/twitter')
 
 print(trainpath)
