@@ -7,13 +7,16 @@ from io import StringIO
 import numpy as np
 import pandas as pd
 
-import joblib
+from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 from sagemaker_containers.beta.framework import worker
+
+import nltk
+nltk.download('stopwords')
 
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer

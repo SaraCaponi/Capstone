@@ -10,6 +10,7 @@ TODO Exploration
   - LinearSVC
   - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
+- joblib import: which one should I use?
 
 #### Training Data
 
