@@ -28,6 +28,7 @@ parser.add_argument('--sample', type=float, default=0.005)
 args, _ = parser.parse_known_args()
 df = df.sample(frac=args.sample)
 
+# Split the data into train/test sets
 X_train, X_test, y_train, y_test = train_test_split(
     df['text'], df['target'], test_size=1 - TRAIN_SIZE, random_state=69)
 
