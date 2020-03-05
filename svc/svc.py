@@ -85,6 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('--sublinear-tf', type=bool, default=True)
     parser.add_argument('--kernel', type=str, default='linear')
     parser.add_argument('--C', type=float, default=1.0)
+    parser.add_argument('--probability', type=bool, default=True)
 
     # Data, model, and output directories
     # parser.add_argument('--output-data-dir', type=str,
@@ -135,19 +136,23 @@ if __name__ == '__main__':
                                   smooth_idf=args.smooth_idf,
                                   sublinear_tf=args.sublinear_tf)),
         ('clf', SVC(kernel=args.kernel,
-                    C=args.C))
+                    C=args.C,
+                    probability=args.probability))
     ])
 
     clf = pipe.fit(X_train, y_train)
 
     print('Print validation statistics')
-    predicted = clf.predict(X_test)
+    pred = clf.predict(X_test)
+    pred_proba = clf.predict_proba(X_test)
+
+    print(pred)
+    print(pred_proba)
 
     # TODO WHy the fuck are these the same?
-    print('Accuracy: {}'.format(accuracy_score(y_test, predicted)))
-    print('Precision: {}'.format(precision_score(
-        y_test, predicted, average='macro')))
-    print('Recall: {}'.format(recall_score(y_test, predicted, average='micro')))
+    print('Accuracy: {}'.format(accuracy_score(y_test, pred)))
+    print('Precision: {}'.format(precision_score(y_test, pred, average='macro')))
+    print('Recall: {}'.format(recall_score(y_test, pred, average='micro')))
     # TODO Add more validation statistics
 
     print('Save the model')
