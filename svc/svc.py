@@ -13,6 +13,8 @@ from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
+from sagemaker_containers.beta.framework import worker
+
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 
@@ -61,7 +63,7 @@ def input_fn(request_body, request_content_type):
         return df
     else:
         raise ValueError(
-            '{} is not supported by script!'.format(request_content_type))
+            '{} is not supported by script.'.format(request_content_type))
 
 
 def predict_fn(input_data, model):
@@ -79,8 +81,11 @@ def predict_fn(input_data, model):
 
 
 def output_fn(prediction, content_type):
-    # TODO Implement output_fn
-    pass
+    if content_type == 'application/json':
+        return worker.Response(json.dumps(prediction), content_type, mimetype=content_type)
+    else:
+        raise ValueError(
+            '{} accept type is not supported by this script.'.format(content_type))
 
 
 if __name__ == '__main__':
