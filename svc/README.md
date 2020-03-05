@@ -58,7 +58,19 @@ TODO Document how to invoke the deployed model
 
 ```json
 {
-    "tweet": [tweet, ...]
+  "title": "Input Tweets",
+  "description": "Tweets to be predicted",
+  "type": "object",
+  "properties": {
+    "tweet": {
+      "description": "An array of tweets",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["tweet"]
 }
 ```
 
@@ -66,12 +78,32 @@ TODO Document how to invoke the deployed model
 
 ```json
 {
-  "results": [
-    {
-      "prediction": "NEGATIVE" | "POSITIVE",
-      "probability": [probability_of_negative, probability_of_positive]
+    "title": "Output predictions",
+    "description": "Predictions input tweets",
+    "type": "object",
+    "properties" : {
+        "results": {
+            "description": "An array of prediction objects",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "prediction": {
+                        "type": "string",
+                        "enum": ["NEGATIVE", "POSITIVE"]
+                    },
+                    "probability": {
+                        "type": "array",
+                        "items": "number"
+                        "minItems": 2,
+                        "maxItems": 2
+                    }
+                },
+                "required": ["predictions", "probability"]
+            }
+        }
     }
-  ]
+    "required": ["results"]
 }
 ```
 
