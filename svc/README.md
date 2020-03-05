@@ -6,8 +6,6 @@ TODO Hyperparameter tuning results
 
 TODO Model validation metrics
 
-TODO Document training dataset target and stuff
-
 #### Notes For Me
 
 TODO Exploration
@@ -20,6 +18,13 @@ TODO Exploration
   - LinearSVC
   - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
+
+#### Training Data
+[Sentiment140 - 1.6 million tweets](https://www.kaggle.com/kazanova/sentiment140 "Kaggle")
+
+Relevant Columns
+- **target**: the polarity of the tweet (0 = negative, 4 = positive)
+- **text**: the text of the tweet
 
 #### Prepare Data
 
