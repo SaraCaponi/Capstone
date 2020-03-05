@@ -94,7 +94,7 @@ TODO Document how to invoke the deployed model
                     },
                     "probability": {
                         "type": "array",
-                        "items": "number"
+                        "items": "number",
                         "minItems": 2,
                         "maxItems": 2
                     }
@@ -102,7 +102,7 @@ TODO Document how to invoke the deployed model
                 "required": ["predictions", "probability"]
             }
         }
-    }
+    },
     "required": ["results"]
 }
 ```
