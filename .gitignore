@@ -1,5 +1,6 @@
 # VSCode 
 *.code-workspace
+.vscode/
 
 # Data and Models
 *.csv
@@ -118,6 +119,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+Scripts/
+pyvenv.cfg
 
 # Spyder project settings
 .spyderproject
