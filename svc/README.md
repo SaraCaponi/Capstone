@@ -3,14 +3,13 @@
 TODO Exploration
 
 - Finalize project structure
+- Convert to Notebooks
 - ngrams?
 - VADER
-- Confidence values
 - scikit learn
-  - LinearSVC
   - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
-- joblib import: which one should I use?
+- joblib import: How do I handle the two different imports?
 
 #### Training Data
 
@@ -23,10 +22,13 @@ Relevant Columns
 
 #### Prepare Data
 
-Assuming that your Python directory is rooted at Capstone.
+Assuming that your directory is rooted at Capstone.
 
 ```console
 python svc/PrepareData.py --sample SAMPLE_PERCENTAGE
+
+python svc/PrepareData.py --sample 1.0
+python svc/PrepareData.py --sample 0.50
 ```
 
 #### Training
@@ -51,7 +53,7 @@ TODO Model validation metrics
 
 ### Invoking the Deployed Model
 
-TODO Document how to invoke the deployed model
+[Predict.py](/svc/Predict.py "Predict.py")
 
 #### Input and Output Specifications
 
@@ -94,10 +96,7 @@ TODO Document how to invoke the deployed model
                         "enum": ["NEGATIVE", "POSITIVE"]
                     },
                     "probability": {
-                        "type": "array",
-                        "items": "number",
-                        "minItems": 2,
-                        "maxItems": 2
+                        "type": "number",
                     }
                 },
                 "required": ["predictions", "probability"]
