@@ -3,13 +3,12 @@
 TODO Exploration
 
 - Finalize project structure
-- Convert to Notebooks
 - ngrams?
 - VADER
 - scikit learn
+  - VotingClassifier with LinearSVC, VADER, and something else
   - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
-- joblib import: How do I handle the two different imports?
 
 #### Training Data
 
