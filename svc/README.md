@@ -5,6 +5,9 @@ TODO Exploration
 - Finalize project structure
 - ngrams?
 - VADER
+- test_train_split
+  - shuffle
+  - stratify
 - scikit learn
   - VotingClassifier with LinearSVC, VADER, and something else
   - SGDClassifier
