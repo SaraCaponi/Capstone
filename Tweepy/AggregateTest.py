@@ -2,7 +2,7 @@ from TweepyFunctions import get_users_tweets, get_hashtag_tweets
 from AggregateFunction import aggregateData 
 import json 
 from datetime import datetime
-from DatabaseSetup import cluster, db, collection 
+from DatabaseQueries import cluster, db, collection 
 
 query = "mizzou"
 tweets = get_users_tweets(query)
@@ -16,7 +16,7 @@ with open('/Users/saracaponi/Desktop/Capstone/Code/TestData.json') as f:
   result = aggregateData(data)
 
 now = datetime.now()
-post = {"_id" : ,
+post = {"_id" : 12,
        "query": query,
         "type" : "user",
         "score" : result['score'],
@@ -25,7 +25,7 @@ post = {"_id" : ,
         "timeLog" : now
         }
 
-collection.insert_one(test)
+collection.insert_one(post)
 
 
 
