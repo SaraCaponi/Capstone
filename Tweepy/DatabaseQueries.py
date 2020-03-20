@@ -8,9 +8,6 @@ collection = db["Search_Records"]
 
 
 #---------------------how to insert search query into database-------------------------
-# result is object passed back from aggregate function
-# result = {'score': 0, 'posIndex': 0 , 'negIndex': 0}
-
 
 #now = datetime.now()
 #test = {"_id" : ,
