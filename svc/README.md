@@ -12,6 +12,9 @@ TODO Exploration
   - VotingClassifier with LinearSVC, VADER, and something else
   - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
+- Neural network methods: LSTM
+- Add more training data that isn't twitter related?
+  - Stanford sentiment treebank data
 
 #### Training Data
 
