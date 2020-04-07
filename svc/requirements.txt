@@ -1,1 +1,2 @@
 nltk
+sagemaker-containers<2.8.3
