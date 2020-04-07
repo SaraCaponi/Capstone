@@ -5,6 +5,10 @@
 # Data and Models
 *.csv
 *.joblib
+script.py
+
+# EB Deployment
+ts.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
