@@ -3,7 +3,7 @@ from app import application
 from app.forms import SearchForm
 
 @application.route('/')
-@application.route('/index')
+@application.route('/index/')
 def home():
     form = SearchForm()
     return render_template('index.html', form=form)
