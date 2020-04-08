@@ -3,16 +3,10 @@
 TODO Exploration
 
 - Finalize project structure
-- ngrams?
-- VADER
 - test_train_split
   - shuffle
   - stratify
-- scikit learn
-  - VotingClassifier with LinearSVC, VADER, and something else
-  - SGDClassifier
 - Handle words with repetitive characters such as 'sweeeeeeeet'
-- Neural network methods: LSTM
 - Add more training data that isn't twitter related?
   - Stanford sentiment treebank data
 
@@ -24,41 +18,6 @@ Relevant Columns
 
 - **target**: the polarity of the tweet (0 = negative, 4 = positive)
 - **text**: the text of the tweet
-
-#### Prepare Data
-
-Assuming that your directory is rooted at Capstone.
-
-```console
-python svc/PrepareData.py --sample SAMPLE_PERCENTAGE
-
-python svc/PrepareData.py --sample 1.0
-python svc/PrepareData.py --sample 0.50
-```
-
-#### Training
-
-##### Locally
-
-TODO Document how to use hyperparameters
-
-Assuming that your Python directory is rooted at Capstone.
-
-```console
-python svc/svc.py --model-dir svc/ --train svc/ --test svc/
-```
-
-##### On SageMaker
-
-TODO Document how to train on SageMaker
-
-#### Validating the Model
-
-TODO Model validation metrics
-
-### Invoking the Deployed Model
-
-[Predict.py](/svc/Predict.py "Predict.py")
 
 #### Input and Output Specifications
 
