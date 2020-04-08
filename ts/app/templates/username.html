@@ -1,195 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>twitter sentiment</title>	
+    <meta charset="utf-8" />
+    <title>twitter sentiment</title>
 
-    <link     href='http://fonts.googleapis.com/css?family=Sintony:400,700'     rel='stylesheet' type='text/css'>
-<!--
-    <style type="text/css">    
-      body
-      {
-        background-color:#0084b4;
-      }
-
-      h1
-      {
-        font-size:48px;
-        margin-top:0;
-        font-family:Arial, sans-serif;
-        text-shadow:2px 0 15px #00aced;
-        letter-spacing:4px;
-        text-decoration:none;
-        color:#0084b4;
-      }
-
-      #banner
-      {
-        width:500px;
-        height:auto;
-        text-align:center;
-        background-color: #c0deed;
-        background-repeat:no-repeat;
-        border-radius:5px;
-        margin:90px auto auto;
-        padding:80px 0;
-      }
-
-      .lead
-      {
-        background-color:rgba(255,255,255,0.6);
-        border-radius:3px;
-        box-shadow:rgba(0,0,0,0.2) 0 1px 3px;
-        font-family:Sintony, sans-serif;
-      }
-        
-        
-      .text
-      { 
-        font-family:Sintony, sans-serif;
-      }
-        
-    .button
-    {
-     
-  background-color:rgba(255,255,255,0.6);
-  font-family:Sintony, sans-serif;
-  border: none;
-  color: black;
-  padding: 10px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 4px;
-  cursor: pointer;
-
-
-    }
-        
-    .input    
-        {
-            width: 425px;
-            height: 30px;
-            font-family:Sintony, sans-serif;
-
-
-        }
-        
-        
-        
-        
-        
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #c0deed;
-  font-family:Sintony, sans-serif;
-}
-
-li {
-  float: left;
-}
-
-     
-
-li a, .dropbtn {
-  display: inline-block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-  background-color: #ffffff;
-}
-
-li.dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #c0deed;
-  min-width: 138px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #ffffff;}
-
-.dropdown:hover .dropdown-content {
-  display: block;        
-    }
-        
-   .column {
-  width: 30%;
-  padding: 80px;
-  height: 200px; /* Should be removed. Only for demonstration */
-  background-color:rgba(255,255,255,0.6);
-        font-family:Sintony, sans-serif;
-}
-        
-        .grid{
-            
-            justify-content: center;
-            display: grid;
-            grid-column: 10px;
-            grid-template-columns: repeat(3, auto);
-            text-align: center;
-            
-        }
-
-
-         </style>
--->
-  </head>  
+    <link
+      href="http://fonts.googleapis.com/css?family=Sintony:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
 
   <body>
-      {% extends "navbar.html" %}
-{% block content %}
-      <!--
-      
-<ul>      
-    <li><a href="index.html">Home</a></li>  
-    <li class="dropdown">
-        <a class="dropbtn">Leaderboards</a>
-            <div class="dropdown-content">
-                <a href="username.html">Username</a>
-                <a href="hashtag.html">Hashtag</a>
-            </div>
-    </li>
-     
-  <li><a href="about.html" >About Us</a></li>
-</ul>
- -->      
+    {% extends "navbar.html" %} {% block content %}
+
     <div id="banner">
       <h1>username leaderboard</h1>
-              <p class="lead">Here are the cached username leaderboards</p>
-
+      <p class="lead">Here are the cached username leaderboards</p>
     </div>
-     
-      
-  <div class="grid">
-    <p class="column">Most Negative</p>
 
-    <p class="column">Most Searched</p>
-    <p class="column">Most Positive</p>
-      
-  </div>
-      
-       {% endblock %}
+    <div class="grid">
+      <p class="column">Most Negative</p>
+
+      <p class="column">Most Searched</p>
+      <p class="column">Most Positive</p>
+    </div>
+
+    {% endblock %}
   </body>
 </html>
