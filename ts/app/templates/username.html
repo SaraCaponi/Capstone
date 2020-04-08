@@ -1,31 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>twitter sentiment</title>
+{% extends "base.html" %} {% block content %}
 
-    <link
-      href="http://fonts.googleapis.com/css?family=Sintony:400,700"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </head>
+<div id="banner">
+  <h1>username leaderboard</h1>
+  <p class="lead">Here are the cached username leaderboards</p>
+</div>
 
-  <body>
-    {% extends "navbar.html" %} {% block content %}
+<div class="grid">
+  <p class="column">Most Negative</p>
 
-    <div id="banner">
-      <h1>username leaderboard</h1>
-      <p class="lead">Here are the cached username leaderboards</p>
-    </div>
+  <p class="column">Most Searched</p>
+  <p class="column">Most Positive</p>
+</div>
 
-    <div class="grid">
-      <p class="column">Most Negative</p>
-
-      <p class="column">Most Searched</p>
-      <p class="column">Most Positive</p>
-    </div>
-
-    {% endblock %}
-  </body>
-</html>
+{% endblock %}

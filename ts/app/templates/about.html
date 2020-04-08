@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>twitter sentiment</title>
+{% extends "base.html" %} {% block content %}
 
-    <link
-      href="http://fonts.googleapis.com/css?family=Sintony:400,700"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </head>
+<div id="banner">
+  <h1>about us</h1>
+  <p class="lead">What is Twitter Sentiment?</p>
+  <p class="text">
+    Twitter Sentiment is a web based application that allows you to discover the
+    sentiment of a username or hashtag on Twitter.
+  </p>
 
-  <body>
-    {% extends "navbar.html" %} {% block content %}
+  <p class="lead">How does it work?</p>
+  <p class="text">
+    You can read our technical documentation to find out more.
+  </p>
 
-    <div id="banner">
-      <h1>about us</h1>
-      <p class="lead">What is Twitter Sentiment?</p>
-      <p class="text">
-        Twitter Sentiment is a web based application that allows you to discover
-        the sentiment of a username or hashtag on Twitter.
-      </p>
+  <p class="lead">Who created Twitter Sentiment?</p>
+  <p class="text">
+    Sara Caponi, Daniel Jaegers, and Sarah Wooldridge created Twitter Sentiment
+    for Computer Science Capstone II at the University of Missouri - Columbia.
+  </p>
+</div>
 
-      <p class="lead">How does it work?</p>
-      <p class="text">
-        You can read our technical documentation to find out more.
-      </p>
-
-      <p class="lead">Who created Twitter Sentiment?</p>
-      <p class="text">
-        Sara Caponi, Daniel Jaegers, and Sarah Wooldridge created Twitter
-        Sentiment for Computer Science Capstone II at the University of Missouri
-        - Columbia.
-      </p>
-    </div>
-    {% endblock %}
-  </body>
-</html>
+{% endblock %}
