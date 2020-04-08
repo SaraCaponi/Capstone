@@ -1,10 +1,12 @@
 from flask import render_template
 from app import application
+from app.forms import SearchForm
 
 @application.route('/')
 @application.route('/index')
 def home():
-    return render_template('index.html')
+    form = SearchForm()
+    return render_template('index.html', form=form)
 
 @application.route('/username/')
 def username():

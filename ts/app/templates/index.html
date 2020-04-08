@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <title>twitter sentiment</title>	
 
-    <link     href='http://fonts.googleapis.com/css?family=Sintony:400,700'     rel='stylesheet' type='text/css'>
-   <link rel="icon" type="image/png"  href="C:/Users/billy/OneDrive/Desktop/favicon.png">
+    <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
 
 <!--
     <style type="text/css">    
@@ -209,12 +208,17 @@ li.dropdown {
      
     <div id="banner">
       <h1>twitter sentiment</h1>
-              <p class="lead">Enter a username or hashtag in the search bar below. To search, click on the corresponding button to get results.</p>
+      <p class="lead">Enter a username or hashtag in the search bar below. To search, click on the corresponding button to get results.</p>
 
-    <input class="input" type="text" placeholder="Enter a username or hashtag" >
+      <form action="" method="get" novalidate>
+        {{ form.hidden_tag() }}
+
+        {{ form.query(class="input", placeholder="Enter a username or hashtag", size=50) }}
+
+        {{ form.submitUsername(class="button") }}
+        {{ form.submitHashtag(class="button") }}
+      </form>
     
-        <button id ="username" class="button">username</button>
-        <button id="hashtag" class="button">hashtag</button>
     </div>
       
       <!-- The Username Modal -->
