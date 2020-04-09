@@ -4,11 +4,14 @@ from datetime import datetime
 from datetime import timedelta
 from Credentials import access_key, access_secret, consumer_key, consumer_secret
 
+RATE_ERROR = 0 
+SEARCH_ERROR = 1
+
 def get_users_tweets(username): 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
     auth.set_access_token(access_key, access_secret) 
 
-    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True) 
+    api = tweepy.API(auth) 
 
     # gets the current time and subtracts 1 year to find the end time
     current_time = datetime.now()
@@ -49,17 +52,20 @@ def get_users_tweets(username):
             # adds the tweets to the all_tweets array
             all_tweets.extend(tweets)
             
-    # if there was an error in pulling the tweets return an empty array 
-    except tweepy.TweepError:
-        return []
+    except tweepy.TweepError as err:
+         # returns error if rate limit is exceeded
+        if err.reason.find("status code = 429") > -1:
+           return RATE_ERROR   
+        #returns error if any other error, username doesnt exist, invalid syntax, user is private, no tweets in past year
+        return SEARCH_ERROR
     
     for tweet in all_tweets:
         # need to do another check because the code could enter the loop but only 5 more tweets were in the last year
         if tweet.created_at > end_time:
             # extracts just the text
             temp.append(tweet.full_text)
-    
-    # returns array of tweets if sucessful, empty array if error
+
+    # returns array of tweets if sucessful
     result = {"tweet": temp}
     return result
     
@@ -69,7 +75,7 @@ def get_hashtag_tweets(hashtag):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
     auth.set_access_token(access_key, access_secret) 
     # create api call 
-    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True) 
+    api = tweepy.API(auth ) 
 
     tweets = []
     try:
@@ -82,8 +88,15 @@ def get_hashtag_tweets(hashtag):
             #appends the tweets to the arry 
             tweets.append(tweet.full_text)
     
-      # returns array of tweets if sucessful, empty array if error
-    except tweepy.TweepError:
-        return []
+    
+    except tweepy.TweepError as err:
+         # returns error if rate limit is exceeded
+        if err.reason.find("status code = 429") > -1:
+           return RATE_ERROR   
+        #returns error if any other error, hashtag doesnt exist, invalid syntax, no tweets avalible in past 7 days, ect
+        return SEARCH_ERROR
+
+
+    # if sucessful returns tweets 
     result = {"tweet": tweets}
     return result
