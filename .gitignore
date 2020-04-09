@@ -141,3 +141,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Tweepy, Database and Amazon Credentials 
+Tweepy/Credentials.py

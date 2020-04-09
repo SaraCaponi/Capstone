@@ -1,8 +1,9 @@
 import pymongo
 from pymongo import MongoClient
 from datetime import datetime 
+from Credentials import database_connect
 
-cluster = MongoClient('XXXX')
+cluster = MongoClient(database_connect)
 db = cluster["DSS"]
 collection = db["Search_Records"]
 

@@ -19,7 +19,7 @@ def aggregateData(data):
     # loops through the results array in the json response
     for x in data['results']:   
         numOfTweets += 1            # counts the number of tweets
-        if x['prediction'] == "Positive":   
+        if x['prediction'] == "POSITIVE":   
             pos +=1          # counts the number of tweets that have a positive prediction
         else: 
             neg += 1        # counts the number of tweets with a negativee prediction 

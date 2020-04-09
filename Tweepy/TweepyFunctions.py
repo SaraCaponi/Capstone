@@ -1,11 +1,12 @@
 import tweepy 
 import json
-from TweepyCredentials import auth
 from datetime import datetime 
 from datetime import timedelta
-
+from Credentials import access_key, access_secret, consumer_key, consumer_secret
 
 def get_users_tweets(username): 
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
+    auth.set_access_token(access_key, access_secret) 
 
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True) 
 
@@ -21,10 +22,15 @@ def get_users_tweets(username):
                                    count = 200,
                                    tweet_mode="extended"
                                    ) 
+        
+         # if there are no tweets for the user, return empty array
+        if not tweets:
+            return []
+            
         # creates array to hold all of the tweets and appends the exsiting tweets array to it
         all_tweets = []
         all_tweets.extend(tweets)
-        # gets the id of the last tweet 
+         # gets the id of the last tweet 
         oldest_id = tweets[-1].id
 
         # while the time of tweet of the last tweet in the array is more than the end time
@@ -54,15 +60,18 @@ def get_users_tweets(username):
             temp.append(tweet.full_text)
     
     # returns array of tweets if sucessful, empty array if error
-    return temp
+    result = {"tweet": temp}
+    return result
     
 
 
 def get_hashtag_tweets(hashtag):
-
-    tweets = []
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
+    auth.set_access_token(access_key, access_secret) 
     # create api call 
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True) 
+
+    tweets = []
     try:
         #gets 100 tweets at a time until there are 3200 total
         for tweet in tweepy.Cursor(api.search,q="#"+hashtag,
@@ -76,4 +85,5 @@ def get_hashtag_tweets(hashtag):
       # returns array of tweets if sucessful, empty array if error
     except tweepy.TweepError:
         return []
-    return tweets 
+    result = {"tweet": tweets}
+    return result
