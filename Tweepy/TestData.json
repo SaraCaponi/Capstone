@@ -1,74 +1,32 @@
 {
     "results": [ 
         {
-            "prediction": "Positive",
+            "prediction": "POSITIVE",
             "probability": 0.87
         },
         {
-            "prediction": "Negative",
-            "probability": -1.2
+            "prediction": "NEGATIVE",
+            "probability": -0.2
         },
         {
-            "prediction": "Positive",
-            "probability": 1.45
-        },
-        {
-            "prediction": "Positive",
-            "probability": 0.89
-        },
-        {
-            "prediction": "Negative",
-            "probability": -0.8
-        },
-        {
-            "prediction": "Positive",
+            "prediction": "POSITIVE",
             "probability": 0.98
         },
         {
-            "prediction": "Positive",
-            "probability": 1.07
+            "prediction": "POSITIVE",
+            "probability": 0.77
         },
         {
-            "prediction": "Negative",
+            "prediction": "NEGATIVE",
             "probability": -0.72
         },
         {
-            "prediction": "Positive",
+            "prediction": "POSITIVE",
             "probability": 0.81
         },
         {
-            "prediction": "Positive",
-            "probability": 1.33
-        },
-        {
-            "prediction": "Negative",
-            "probability": -1.19
-        },
-        {
-            "prediction": "Positive",
-            "probability": 0.90
-        },  {
-            "prediction": "Positive",
-            "probability": 1.11
-        },
-        {
-            "prediction": "Negative",
-            "probability": -1.27
-        },
-        {
-            "prediction": "Positive",
-            "probability": 0.79
-        },  {
-            "prediction": "Positive",
-            "probability": 0.96
-        },
-        {
-            "prediction": "Negative",
-            "probability": -0.97
-        },
-        {
-            "prediction": "Positive",
-            "probability": 1.34
+            "prediction": "POSITIVE",
+            "probability": 0.33
         }
 
     ]

@@ -15,9 +15,9 @@ runtime = boto3.client(
     )
 
 # get the tweets
-query = "nytimes"
-#tweets = get_hashtag_tweets(query)
-tweets = get_users_tweets(query)
+query = "qwiowef0d"
+tweets = get_hashtag_tweets(query)
+#tweets = get_users_tweets(query)
 
 #if rate limit was exceeded print message
 if tweets == RATE_ERROR:
@@ -25,7 +25,12 @@ if tweets == RATE_ERROR:
 
 #if search error occured print message
 elif tweets == SEARCH_ERROR:
-  print("no tweets avalible for given query")
+  print("The username searched is either private or does not exist")
+  # or hashtag/username searched had invlid syntax
+
+#if no tweets exist
+elif not tweets:
+  print("There are no avalible tweets for that user or hashtag")
 
 # if sucessfully pulled tweets, send to alg
 else:

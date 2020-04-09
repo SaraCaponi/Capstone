@@ -98,5 +98,7 @@ def get_hashtag_tweets(hashtag):
 
 
     # if sucessful returns tweets 
-    result = {"tweet": tweets}
-    return result
+    if tweets:
+        result = {"tweet": tweets}
+        return result
+    return []
