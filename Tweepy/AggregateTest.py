@@ -3,12 +3,13 @@ from AggregateFunction import aggregateData
 import json 
 from datetime import datetime
 from DatabaseQueries import cluster, db, collection 
+from Credentials import aws_access_key_id, aws_secret_access_key
 import boto3
 
 runtime = boto3.client(
     'sagemaker-runtime',
-    aws_access_key_id='AKIASKF3S7J2ZW36FB7V',
-    aws_secret_access_key='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',
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key,
     region_name='us-east-1'
     )
 
@@ -31,7 +32,7 @@ else:
    #   print(pred)
 
   result = aggregateData(results)
-  print(result)
+  #print(result)
  
   now = datetime.now()
   post = {"_id" : 5,
