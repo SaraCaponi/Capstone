@@ -9,6 +9,10 @@ def home():
 
     if form.validate_on_submit():
         flash('Query {}'.format(form.query.data))
+        # TODO Add tweepy code
+
+        # Use flash messages to display validation errors and stuff
+
         return render_template('index.html', form=form, data=form.query.data)
 
 
