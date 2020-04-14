@@ -1,10 +1,9 @@
-from TweepyFunctions import get_users_tweets, get_hashtag_tweets, RATE_ERROR, SEARCH_ERROR
-from AggregateFunction import aggregateData 
 import json 
+import boto3
+from TweepyFunctions import *
 from datetime import datetime
 from DatabaseQueries import cluster, db, collection 
 from Credentials import aws_access_key_id, aws_secret_access_key
-import boto3
 
 # connect to endpoint
 runtime = boto3.client(
@@ -15,9 +14,9 @@ runtime = boto3.client(
     )
 
 # get the tweets
-query = "qwiowef0d"
-tweets = get_hashtag_tweets(query)
-#tweets = get_users_tweets(query)
+query = "jimmyfallon"
+#tweets = get_hashtag_tweets(query)
+tweets = get_users_tweets(query)
 
 #if rate limit was exceeded print message
 if tweets == RATE_ERROR:
@@ -32,11 +31,20 @@ elif tweets == SEARCH_ERROR:
 elif not tweets:
   print("There are no avalible tweets for that user or hashtag")
 
-# if sucessfully pulled tweets, send to alg
+# if sucessfully pulled tweets, run preprocessing algorithm 
 else:
+  processedTweets = []
+  #send each tweet to preprocess function
+  for x in tweets['tweet']:
+    processedTweets.append(preprocess(x))
+
+  #create new processedTweet obj and set its tweet value to processedTweets 
+  processedTweet = {"tweet": processedTweets}
+      
+  #call sentiment alg with processedTweet
   response = runtime.invoke_endpoint(
       EndpointName='twitter-svc-tuner-200324-1449-015-0d842270',
-      Body=json.dumps(tweets),
+      Body=json.dumps(processedTweet),
       ContentType='application/json')
 
   # gets response from alg
@@ -44,13 +52,13 @@ else:
 
   #aggregates the results into a result object with score, posIndex, and negIndex
   result = aggregateData(results)
-  #print(result)
- 
+  print(result)
+
   #creates database entry
   now = datetime.now()
-  post = {"_id" : 5,
+  post = {
        "query": query,
-        "type" : "hashtag",
+        "type" : "user",
         "score" : result['score'],
         "mostPositive" : tweets['tweet'][result['posIndex']],
         "mostNegative" : tweets['tweet'][result['negIndex']],
@@ -59,3 +67,4 @@ else:
 
   #comment this line out if you dont want to log the results in the database
   collection.insert_one(post)
+  

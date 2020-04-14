@@ -1,12 +1,20 @@
 import tweepy 
 import json
+import re
 from datetime import datetime 
 from datetime import timedelta
 from Credentials import access_key, access_secret, consumer_key, consumer_secret
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
 
 RATE_ERROR = 0 
 SEARCH_ERROR = 1
+stop_words = stopwords.words("english")
+stemmer = SnowballStemmer("english")
+TWEET_CLEANING_RE = r'@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+'
 
+
+#returns all tweets tweeted in the past year by given username
 def get_users_tweets(username): 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
     auth.set_access_token(access_key, access_secret) 
@@ -71,6 +79,7 @@ def get_users_tweets(username):
     
 
 
+# returns 3200 most recent tweets in the past week for given hashtag
 def get_hashtag_tweets(hashtag):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
     auth.set_access_token(access_key, access_secret) 
@@ -102,3 +111,60 @@ def get_hashtag_tweets(hashtag):
         result = {"tweet": tweets}
         return result
     return []
+
+
+
+#runs preprocessing algorithm on tweets
+def preprocess(tweet, stem=False):
+    """Preprocesses one tweet"""
+    tweet = re.sub(TWEET_CLEANING_RE, ' ', str(tweet).lower()).strip()
+    tokens = []
+    for token in tweet.split():
+        if token not in stop_words:
+            if stem:
+                tokens.append(stemmer.stem(token))
+            else:
+                tokens.append(token)
+    return " ".join(tokens)
+
+
+
+#aggregates the response from the sentiment algorithm and returns a result object with score, most pos index, and most neg index 
+def aggregateData(data):
+    # declaring and initializing return varaible 
+    result = {'score': 0, 'posIndex': 0 , 'negIndex': 0}
+
+    pos = 0
+    neg = 0
+    numOfTweets = 0
+    
+    # loops through the results array in the json response
+    for x in data['results']:   
+        numOfTweets += 1            # counts the number of tweets
+        if x['prediction'] == "POSITIVE":   
+            pos +=1          # counts the number of tweets that have a positive prediction
+        else: 
+            neg += 1        # counts the number of tweets with a negativee prediction 
+    score = (pos - neg) /numOfTweets     # calculates the score 
+
+    # sets the score of the result
+    result['score'] = score
+
+    mostNeg = 0
+    mostPos = 0
+    index = 0
+
+    for x in data['results']:
+        if x['probability'] > mostPos:   # if the probability for positive is greater than the current mosPos 
+            mostPos = x['probability']   # set mostPos to current probablity 
+            mostPosIndex = index            # sets the index
+        if x['probability'] < mostNeg:   # if the probability for negative is greater than the current mostNeg 
+            mostNeg = x['probability']   # set mostNeg to current probability 
+            mostNegIndex = index            # sets the index
+        index += 1                      # increments the index 
+
+    # sets the results posIndex and negIndex values 
+    result['posIndex'] = mostPosIndex
+    result['negIndex'] = mostNegIndex
+
+    return result
