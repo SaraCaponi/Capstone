@@ -9,6 +9,13 @@ import json
 import boto3
 from datetime import datetime
 
+
+cluster = MongoClient(database_connect)
+db = cluster["DSS"]
+collection = db["Search_Records"]
+LBcollection = db["Leaderboard_Cache"] 
+
+
 @application.route('/', methods=['GET', 'POST'])
 @application.route('/index/', methods=['GET', 'POST'])
 def home():
@@ -34,15 +41,24 @@ def home():
 
         #if rate limit was exceeded print message
         if tweets == RATE_ERROR:
-            print("Rate limit reached. Please wait before trying again")
+            return render_template('index.html',
+                                 form=form, 
+                                 error= 'Rate limit reached. Please wait before trying again'
+                                 )
 
         #if search error occured print message
         elif tweets == SEARCH_ERROR:
-            print("The username searched is either private or does not exist")
+            return render_template('index.html',
+                                 form=form, 
+                                 error= 'An error occured while searching. Please check that your syntax is correct or that the username searched exists and is not private.'
+                                 )
 
         #if no tweets exist
         elif not tweets:
-            print("There are no avalible tweets for that user or hashtag")
+            return render_template('index.html',
+                                 form=form, 
+                                 error= 'There are no avalible tweets for that user or hashtag'
+                                 )
 
         else:
             processedTweets = []
@@ -73,13 +89,11 @@ def home():
                 "mostNegative" : tweets['tweet'][result['negIndex']],
                 "timeLog" : now
              }
-            cluster = MongoClient(database_connect)
-            db = cluster["DSS"]
-            collection = db["Search_Records"]
+        
             #comment this line out if you dont want to log the results in the database
             collection.insert_one(post)
 
-        # Use flash messages to display validation errors and stuff
+            # Use flash messages to display validation errors and stuff
             return render_template('index.html',
                                  form=form, 
                                  data=form.query.data, 
@@ -93,10 +107,61 @@ def home():
 
 @application.route('/username/')
 def username():
+    now = datetime.now()
+    yesterday= now - timedelta(days=1)
+ 
+    #get most recent leaderboard
+    leaderboard = list(LBcollection.find().sort("timeCreated", -1).limit(1))
+
+    # if the leaderboard was created in the last 24 hours
+    if leaderboard[0]['timeCreated'] > yesterday:
+        # render user leaderboards with existing leaderboard data
+        return render_template('username.html',
+                                mostPos=leaderboard[0]['postiveUser'],
+                                mostNeg=leaderboard[0]['negativeUser'], 
+                                mostFreq = leaderboard[0]['frequencyUser']
+                            )
+    # if the most recent leaderboar is out dated
+    else:
+        # create a new leaderbord
+        leaderboard = get_leaderboard()
+        # render with new leaderboard data
+        return render_template('username.html',
+                                 mostPos=leaderboard['postiveUser'],
+                                 mostNeg=leaderboard['negativeUser'], 
+                                 mostFreq = leaderboard['frequencyUser']
+                                 )
+
+
     return render_template('username.html')
 
 @application.route('/hashtag/')
 def hashtag():
+    now = datetime.now()
+    yesterday= now - timedelta(days=1)
+ 
+    # get the latest leaderboard in the database
+    leaderboard = list(LBcollection.find().sort("timeCreated", -1).limit(1))
+
+    # if the most recent leaderboard was created less than 24 hours ago 
+    if leaderboard[0]['timeCreated'] > yesterday:
+        #render hashtag leaderboards with exisitng leaderboard
+        return render_template('hashtag.html',
+                                mostPos=leaderboard[0]['postiveHash'],
+                                mostNeg=leaderboard[0]['negativeHash'], 
+                                mostFreq = leaderboard[0]['frequencyHash']
+                            )
+
+    # if the most recent leaderboard is outdated
+    else:
+        #create a new leaderboard
+        leaderboard = get_leaderboard()
+        # render using new leaderboard data
+        return render_template('hashtag.html.html',
+                                 mostPos=leaderboard['postiveHash'],
+                                 mostNeg=leaderboard['negativeHash'], 
+                                 mostFreq = leaderboard['frequencyHash']
+                                 )
     return render_template('hashtag.html')
 
 @application.route('/about/')
