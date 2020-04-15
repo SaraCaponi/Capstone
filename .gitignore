@@ -144,3 +144,4 @@ dmypy.json
 
 # Tweepy, Database and Amazon Credentials 
 Tweepy/Credentials.py
+ts/app/Credentials.py
