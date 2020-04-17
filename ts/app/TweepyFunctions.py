@@ -138,7 +138,7 @@ def preprocess(tweet, stem=False):
 #aggregates the response from the sentiment algorithm and returns a result object with score, most pos index, and most neg index 
 def aggregateData(data):
     # declaring and initializing return varaible 
-    result = {'score': 0, 'posIndex': 0 , 'negIndex': 0}
+    result = {'score': 0, 'posIndex': 0 , 'negIndex': 0, 'positive': 0 , 'negative': 0}
 
     pos = 0
     neg = 0
@@ -155,6 +155,9 @@ def aggregateData(data):
 
     # sets the score of the result
     result['score'] = score
+    result['positive'] = pos
+    result['negative'] = neg
+    
 
     mostNeg = 0
     mostPos = 0
