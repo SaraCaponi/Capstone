@@ -8,6 +8,11 @@ from pymongo import MongoClient
 import json 
 import boto3
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 
 cluster = MongoClient(database_connect)
@@ -93,13 +98,35 @@ def home():
             #comment this line out if you dont want to log the results in the database
             collection.insert_one(post)
 
+            #donut chart creation 
+            # create data
+            names='Positive', 'Negative',
+            size=[result['positive'],result['negative']]
+            
+            # Create a circle for the center of the plot
+            # change color to = color of background to give illusion of transparency
+            my_circle=plt.Circle( (0,0), 0.7, color='#c0deed', linewidth = 2, ls = '-', ec = 'white' )
+
+            # Give color names and set wedge properites
+            plt.pie(size, labels=names, colors=['skyblue','blue'], wedgeprops = { 'linewidth' : 2, 'edgecolor' : 'white' })
+            p=plt.gcf()
+            p.gca().add_artist(my_circle)
+        
+            # needed to send chart as png to html page
+            img = BytesIO()
+            plt.savefig(img, format='png', transparent=True)
+            plt.close()
+            img.seek(0)
+            donut_url = base64.b64encode(img.getvalue()).decode('utf8')
+
             # Use flash messages to display validation errors and stuff
             return render_template('index.html',
                                  form=form, 
                                  data=form.query.data, 
                                  score=result['score'], 
                                  posTweet = tweets['tweet'][result['posIndex']],
-                                 negTweet =tweets['tweet'][result['negIndex']]
+                                 negTweet =tweets['tweet'][result['negIndex']],
+                                 donut_url=donut_url
                                  )
 
 
