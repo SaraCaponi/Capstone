@@ -16,7 +16,9 @@ h1 {
   width: 500px;
   height: auto;
   text-align: center;
-  background-color: #c0deed;
+  background-color: #ffffff;
+
+/*  background-color: #c0deed;*/
   background-repeat: no-repeat;
   border-radius: 5px;
   margin: 90px auto auto;
@@ -24,8 +26,11 @@ h1 {
 }
 
 .lead {
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 3px;
+    background-color: #0084b4;
+    color: white;
+  /*  background-color: #c0deed;
+  background-color: rgba(255, 255, 255, 0.6); */
+  border-radius: 1px; 
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px;
   font-family: Sintony, sans-serif;
 }
@@ -35,10 +40,12 @@ h1 {
 }
 
 .button {
-  background-color: rgba(255, 255, 255, 0.6);
+      background-color: #0084b4;
+    border-radius: 3px;
+ /* background-color: rgba(255, 255, 255, 0.6); */
   font-family: Sintony, sans-serif;
   border: none;
-  color: black;
+  color: white;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
@@ -56,16 +63,23 @@ h1 {
 
 ul {
   list-style-type: none;
+  border-radius: 2px;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #c0deed;
+  background-color: #ffffff;
   font-family: Sintony, sans-serif;
 }
 
-li {
+li{
   float: left;
 }
+
+ol li {
+    float: none;
+    
+}
+
 
 li a,
 .dropbtn {
@@ -78,7 +92,7 @@ li a,
 
 li a:hover,
 .dropdown:hover .dropbtn {
-  background-color: #ffffff;
+  background-color: #E1E8ED;
 }
 
 li.dropdown {
@@ -88,7 +102,8 @@ li.dropdown {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #c0deed;
+  border-radius: 2px;
+  background-color: #ffffff;
   min-width: 138px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -103,7 +118,7 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {
-  background-color: #ffffff;
+  background-color: #E1E8ED;
 }
 
 .dropdown:hover .dropdown-content {
@@ -153,18 +168,38 @@ li.dropdown {
 .name {
   float: right;
 }
+
 .column {
-  width: 30%;
-  padding: 80px;
-  height: 200px; /* Should be removed. Only for demonstration */
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 15px;
+  text-align: center;
   font-family: Sintony, sans-serif;
+    
+
+    /*
+  width: 45%;
+  padding: 80px;
+  height: 200px;  Should be removed. Only for demonstration 
+  background-color: #ffffff;
+  color: black;
+  font-family: Sintony, sans-serif;
+  border-radius: 5px;
+    */
 }
 
 .grid {
+    
+  display: grid;
+  grid-column-gap: 50px;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+    /*
   justify-content: center;
   display: grid;
-  grid-column: 10px;
+  grid-column: 50px;
   grid-template-columns: repeat(3, auto);
   text-align: center;
+    */
 }
