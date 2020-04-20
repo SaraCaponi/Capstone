@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="home">
+    
   <div id="banner">
     <h1>twitter sentiment</h1>
     <p class="lead">
@@ -16,7 +17,7 @@
     </form>
 
     
-    <h2>{{error}}</h2>
+    <p class="text">{{error}}</p>
     <h3>{{ score }}</h3>
     <h4>{{ posTweet }}</h4>
     <h4>{{ negTweet }}</h4>
