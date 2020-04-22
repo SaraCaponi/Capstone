@@ -183,79 +183,54 @@ def get_leaderboard():
     db = cluster["DSS"]
     collection = db["Search_Records"]
 
-    #queries 10 most postive usernames for leaderboards
+   #queries most postive usernames for leaderboards
     mostPosUser = list(collection.find({"type":"user"}).sort("score", -1))
     uniqueMostPosUser = []
-    for x in mostPosUser: 
-        uniqueMostPosUser.append(x['query'])
+    temp = []
 
-    seen = set()
-    uniqueMostPosUser = [x for x in uniqueMostPosUser if not (x in seen or seen.add(x))]
+    for x in mostPosUser:
+        if x['query'] not in temp:
+            uniqueMostPosUser.append(x)
+            temp.append(x['query'])
  
-
-    #queries 10 most negative usernames for leaderboard
-    mostNegUser = list(collection.find({"type":"user"}).sort("score", 1))
-    uniqueMostNegUser = []
-    for x in mostNegUser: 
-        uniqueMostNegUser.append(x['query'])
-
-    seen = set()
-    uniqueMostNegUser = [x for x in uniqueMostNegUser if not (x in seen or seen.add(x))]
-   
-    #queries 10 most postive hashtags for leaderboard
+    #reverses list to get most negative usernames for leaderboards
+    negUser = uniqueMostPosUser[::-1]
+    
+    #queries most positive hashtag for leaderboards
     mostPosHashtag = list(collection.find({"type":"hashtag"}).sort("score", -1))
     uniqueMostPosHashtag = []
-    for x in mostPosHashtag: 
-        uniqueMostPosHashtag.append(x['query'])
+    temp = []
 
-    seen = set()
-    uniqueMostPosHashtag = [x for x in uniqueMostPosHashtag if not (x in seen or seen.add(x))]
+    for x in mostPosHashtag:
+        if x['query'] not in temp:
+            uniqueMostPosHashtag.append(x)
+            temp.append(x['query'])
 
-    #queries 10 most negative hashtags for leaderboard
-    mostNegHashtag = list(collection.find({"type":"hashtag"}).sort("score", 1))
-    uniqueMostNegHashtag = []
-    for x in mostNegHashtag: 
-        uniqueMostNegHashtag.append(x['query'])
-
-    seen = set()
-    uniqueMostNegHashtag = [x for x in uniqueMostNegHashtag if not (x in seen or seen.add(x))]
-
+    #reverses list to get most negative hashtag for leaderboards
+    negHash = uniqueMostPosHashtag[::-1]
 
     #queries 10 most frequently searched hashtags 
     result = collection.aggregate([
-        # Match the type to be hashtag
+        # Match the type to be user
         { "$match": { "type":"hashtag" } },
 
         # Group the documents with the same query and count them
         { "$group": {
             "_id": {
             "query": "$query"
-        },
-        "count": { "$sum": 1 }
+            },
+            "count": { "$sum": 1 }
         }},
         # sort the documents by most frequent
         { "$sort": {
-            "_id.query": 1,
             "count": -1
-        }
-        },
-    #group on query with $first to pick the document with most occurrences.
-        { "$group": {
-            "_id": {
-            "query": "$_id.query"
-        },
-        "count": {
-            "$first": "$count"
-        }
-        }
-    },
-    { "$limit" : 10 }
-    ])
-    # pulls out just the queries from the aggregate response
+            }
+        },{ "$limit" : 10 }
+        ])
     mostFrequentHash = []
     for x in result:
-        mostFrequentHash.append(x["_id"]["query"])
-
+        mostFrequentHash.append(list(collection.find({"query": x['_id']['query']}).sort("timeLog", -1).limit(1)))
+   
 
     #queries 10 most frequently searched usernames
     result = collection.aggregate([
@@ -271,37 +246,24 @@ def get_leaderboard():
         }},
         # sort the documents by most frequent
         { "$sort": {
-            "_id.query": 1,
             "count": -1
             }
-        },
-        #group on query with $first to pick the document with most occurrences.
-        { "$group": {
-            "_id": {
-            "query": "$_id.query"
-            },
-            "count": {
-            "$first": "$count"
-            }
-        }
-        },
-         { "$limit" : 10 }
+        },{ "$limit" : 10 }
         ])
-    # pulls out just the queries from the aggregate response
     mostFrequentUser = []
     for x in result:
-        mostFrequentUser.append(x["_id"]["query"])
+        mostFrequentUser.append(list(collection.find({"query": x['_id']['query']}).sort("timeLog", -1).limit(1)))
 
 
     now = datetime.now()
     # schema for leaderboard creation
     post = {
          "postiveUser" : uniqueMostPosUser[:10],
-         "negativeUser" : uniqueMostNegUser[:10],
-         "frequencyUser" : mostFrequentUser,
+         "negativeUser" : negUser[:10],
+         "frequencyUser" : list(mostFrequentUser),
          "postiveHash" : uniqueMostPosHashtag[:10],
-         "negativeHash" : uniqueMostNegHashtag[:10],
-         "frequencyHash" : mostFrequentHash,
+         "negativeHash" : negHash[:10],
+         "frequencyHash" : list(mostFrequentHash),
          "timeCreated" : now     
     }
     LBcollection = db["Leaderboard_Cache"]  

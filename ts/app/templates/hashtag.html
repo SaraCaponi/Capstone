@@ -3,84 +3,160 @@
 <div id="banner">
   <h1>hashtag leaderboard</h1>
   <p class="lead">Here are the cached hashtag leaderboards</p>
+  <p class="lead">Select a hashtag to see more about it </p>
 </div>
 
 <br>
 
+
+
+
+
 <div class="grid">
     <div class ="column"><p class = "lead">Most Negative</p>
     <ol>
-      <li> {{ "#" + mostNeg[0] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[0].query}}`,`{{mostNeg[0].score}}`, `{{mostNeg[0].mostPositive}}`, `{{mostNeg[0].mostNegative}}` )" >{{ "#" + mostNeg[0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[1] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[1].query}}`,`{{mostNeg[1].score}}`, `{{mostNeg[1].mostPositive}}`, `{{mostNeg[1].mostNegative}}` )" >{{ "#" + mostNeg[1].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[2] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[2].query}}`,`{{mostNeg[2].score}}`, `{{mostNeg[2].mostPositive}}`, `{{mostNeg[2].mostNegative}}` )" >{{ "#" + mostNeg[2].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[3] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[3].query}}`,`{{mostNeg[3].score}}`, `{{mostNeg[3].mostPositive}}`, `{{mostNeg[3].mostNegative}}` )" >{{ "#" + mostNeg[3].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[4] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[4].query}}`,`{{mostNeg[4].score}}`, `{{mostNeg[4].mostPositive}}`, `{{mostNeg[4].mostNegative}}` )" >{{ "#" + mostNeg[4].query }}</a></li>
+      <br>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[5].query}}`,`{{mostNeg[5].score}}`, `{{mostNeg[5].mostPositive}}`, `{{mostNeg[5].mostNegative}}` )" >{{ "#" + mostNeg[5].query }}</a></li>
       <br> 
-      <li> {{ "#" + mostNeg[5] }}</li>
+      <li><a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[6].query}}`,`{{mostNeg[6].score}}`, `{{mostNeg[6].mostPositive}}`, `{{mostNeg[6].mostNegative}}` )" >{{ "#" + mostNeg[6].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[6] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[7].query}}`,`{{mostNeg[7].score}}`, `{{mostNeg[7].mostPositive}}`, `{{mostNeg[7].mostNegative}}` )" >{{ "#" + mostNeg[7].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[7] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[8].query}}`,`{{mostNeg[8].score}}`, `{{mostNeg[8].mostPositive}}`, `{{mostNeg[8].mostNegative}}` )" >{{ "#" + mostNeg[8].query }}</a></li>
       <br>
-      <li> {{ "#" + mostNeg[8] }}</li>
-      <br>
-      <li> {{ "#" + mostNeg[9] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostNeg[9].query}}`,`{{mostNeg[9].score}}`, `{{mostNeg[9].mostPositive}}`, `{{mostNeg[9].mostNegative}}` )" >{{ "#" + mostNeg[9].query }}</a></li>
     </ol>
     
   </div>
   
-    <div class="column"><p class = "lead">Most Searched</p>
+  <div class="column"><p class = "lead">Most Searched</p>
     <ol>
-      <li> {{ "#" + mostFreq[0] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[0][0].query}}`,`{{mostFreq[0][0].score}}`, `{{mostFreq[0][0].mostPositive}}`, `{{mostFreq[0][0].mostNegative}}` )" >{{  "#" + mostFreq[0][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[1] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[1][0].query}}`,`{{mostFreq[1][0].score}}`, `{{mostFreq[1][0].mostPositive}}`, `{{mostFreq[1][0].mostNegative}}` )" >{{  "#" + mostFreq[1][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[2] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[2][0].query}}`,`{{mostFreq[2][0].score}}`, `{{mostFreq[2][0].mostPositive}}`, `{{mostFreq[2][0].mostNegative}}` )" >{{  "#" + mostFreq[2][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[3] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[3][0].query}}`,`{{mostFreq[3][0].score}}`, `{{mostFreq[3][0].mostPositive}}`, `{{mostFreq[3][0].mostNegative}}` )" >{{  "#" + mostFreq[3][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[4] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[4][0].query}}`,`{{mostFreq[4][0].score}}`, `{{mostFreq[4][0].mostPositive}}`, `{{mostFreq[4][0].mostNegative}}` )" >{{  "#" + mostFreq[4][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[5] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[5][0].query}}`,`{{mostFreq[5][0].score}}`, `{{mostFreq[5][0].mostPositive}}`, `{{mostFreq[5][0].mostNegative}}` )" >{{  "#" + mostFreq[5][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[6] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[6][0].query}}`,`{{mostFreq[6][0].score}}`, `{{mostFreq[6][0].mostPositive}}`, `{{mostFreq[6][0].mostNegative}}` )" >{{  "#" + mostFreq[6][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[7] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[7][0].query}}`,`{{mostFreq[7][0].score}}`, `{{mostFreq[7][0].mostPositive}}`, `{{mostFreq[7][0].mostNegative}}` )" >{{  "#" + mostFreq[7][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[8] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[8][0].query}}`,`{{mostFreq[8][0].score}}`, `{{mostFreq[8][0].mostPositive}}`, `{{mostFreq[8][0].mostNegative}}` )" >{{  "#" + mostFreq[8][0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostFreq[9] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostFreq[9][0].query}}`,`{{mostFreq[9][0].score}}`, `{{mostFreq[9][0].mostPositive}}`, `{{mostFreq[9][0].mostNegative}}` )" >{{  "#" + mostFreq[9][0].query }}</a></li>
     </ol>
     </div>
   
   
     <div class="column"><p class = "lead">Most Positive</p>
     <ol>
-      <li> {{ "#" + mostPos[0] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[0].query}}`,`{{mostPos[0].score}}`, `{{mostPos[0].mostPositive}}`, `{{mostPos[0].mostNegative}}` )" >{{ "#" + mostPos[0].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[1] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[1].query}}`,`{{mostPos[1].score}}`, `{{mostPos[1].mostPositive}}`, `{{mostPos[1].mostNegative}}` )" >{{ "#" + mostPos[1].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[2] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[2].query}}`,`{{mostPos[2].score}}`, `{{mostPos[2].mostPositive}}`, `{{mostPos[2].mostNegative}}` )" >{{ "#" + mostPos[2].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[3] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[3].query}}`,`{{mostPos[3].score}}`, `{{mostPos[3].mostPositive}}`, `{{mostPos[3].mostNegative}}` )" >{{ "#" + mostPos[3].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[4] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[4].query}}`,`{{mostPos[4].score}}`, `{{mostPos[4].mostPositive}}`, `{{mostPos[4].mostNegative}}` )" >{{ "#" + mostPos[4].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[5] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[5].query}}`,`{{mostPos[5].score}}`, `{{mostPos[5].mostPositive}}`, `{{mostPos[5].mostNegative}}` )" >{{ "#" + mostPos[5].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[6] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[6].query}}`,`{{mostPos[6].score}}`, `{{mostPos[6].mostPositive}}`, `{{mostPos[6].mostNegative}}` )" >{{ "#" + mostPos[6].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[7] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[7].query}}`,`{{mostPos[7].score}}`, `{{mostPos[7].mostPositive}}`, `{{mostPos[7].mostNegative}}` )" >{{ "#" + mostPos[7].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[8] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[8].query}}`,`{{mostPos[8].score}}`, `{{mostPos[8].mostPositive}}`, `{{mostPos[8].mostNegative}}` );" >{{ "#" + mostPos[8].query }}</a></li>
       <br>
-      <li> {{ "#" + mostPos[9] }}</li>
+      <li> <a data-target="#myModal" data-toggle="modal"
+        href="#myModal" style="padding:0px;" onclick="populateModal(`{{mostPos[9].query}}`,`{{mostPos[9].score}}`, `{{mostPos[9].mostPositive}}`, `{{mostPos[9].mostNegative}}` );" >{{ "#" + mostPos[9].query }}</a></li>
     </ol>
     </div>
+
+    
+
+
+    <div class="container">
+      
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close"  data-dismiss="modal">&times;</button>
+                <h2 class="modal-title" id = "title">Title of hashtag</h2>
+              </div>
+              <div class="modal-body">
+                <h4 class="modal-title" > Score:</h4>
+                <p id ="score"></p>
+                <h4 class="modal-title" > Most Positive Tweet:</h4>
+                <p id ="pos"></p>
+                <h4 class="modal-title" > Most Negative Tweet:</h4>
+                <p id ="neg"></p>
+              </div>
+
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    
+      <script>
+        function populateModal(query, score, mostPositive, mostNegative) {
+          document.getElementById("title").innerHTML ='#' + query;
+          document.getElementById("score").innerHTML = score;
+          document.getElementById("pos").innerHTML = mostPositive;
+          document.getElementById("neg").innerHTML = mostNegative;
+    }
+      </script>
+
 </div>
 
 {% endblock %}
