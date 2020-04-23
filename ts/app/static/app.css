@@ -12,6 +12,40 @@ h1 {
   color: #0084b4;
 }
 
+#wrapper {
+  width: 90%;
+  height: auto;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin: 50px auto 50px auto;
+  padding: 20px;
+}
+#result{
+  margin: 0;
+  text-shadow: none;
+  font-size: 40px;
+  letter-spacing: 1px;
+  
+}
+.container {
+  position: relative;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, 180%);
+   color: #0084b4;
+  font-size: 55px;
+}
+.centerimg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  font-size: 18px;
+}
 #banner {
   width: 500px;
   height: auto;
@@ -21,7 +55,7 @@ h1 {
 /*  background-color: #c0deed;*/
   background-repeat: no-repeat;
   border-radius: 5px;
-  margin: 90px auto auto;
+  margin: 50px auto auto;
   padding: 80px 0;
 }
 
@@ -35,12 +69,22 @@ h1 {
   font-family: Sintony, sans-serif;
 }
 
+.lead2 {
+  background-color: #0084b4;
+  color: white;
+/*  background-color: #c0deed;
+background-color: rgba(255, 255, 255, 0.6); */
+border-radius: 1px; 
+box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px;
+font-family: Sintony, sans-serif;
+}
+
 .text {
   font-family: Sintony, sans-serif;
 }
 
 .button {
-      background-color: #0084b4;
+    background-color: #0084b4;
     border-radius: 3px;
  /* background-color: rgba(255, 255, 255, 0.6); */
   font-family: Sintony, sans-serif;
@@ -150,6 +194,15 @@ li.dropdown {
   width: 80%;
 }
 
+.modal-header{
+  color: #0084b4;
+  font-size:20px;
+}
+.modal-body h4{
+  color: #0084b4;
+  font-size:18px;
+}
+
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -202,4 +255,29 @@ li.dropdown {
   grid-template-columns: repeat(3, auto);
   text-align: center;
     */
+}
+.column2 {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 15px;
+  text-align: center;
+  font-family: Sintony, sans-serif;
+  padding-top: 0;
+  
+}
+
+.grid2 {
+    
+display: grid;
+    
+grid-column-gap: 10px;
+    
+grid-template-columns: 33% 33% 33%;
+    
+padding: 10px;
+    
+height: 400px;
+    
+padding-top: 0;
 }

@@ -149,13 +149,16 @@
       </div>
     
       <script>
-        function populateModal(query, score, mostPositive, mostNegative) {
-          document.getElementById("title").innerHTML ='#' + query;
-          document.getElementById("score").innerHTML = score;
-          document.getElementById("pos").innerHTML = mostPositive;
-          document.getElementById("neg").innerHTML = mostNegative;
-    }
-      </script>
+          function populateModal(query, score, mostPositive, mostNegative) {
+            document.getElementById("title").innerHTML ='#' + query;
+            var new_score = parseFloat(score);
+            new_score = ((new_score + 1) * 100) / 2;
+            new_score = new_score.toFixed(2);
+            document.getElementById("score").innerHTML = new_score + "%";
+            document.getElementById("pos").innerHTML = mostPositive;
+            document.getElementById("neg").innerHTML = mostNegative;
+      }
+        </script>
 
 </div>
 

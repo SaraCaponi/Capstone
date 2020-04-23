@@ -40,9 +40,11 @@ def home():
         # get tweets
         if(form.submitUsername.data):
             search_type = 'user'
+            search_t = '@'
             tweets = get_users_tweets(form.query.data)
         else:
             search_type = 'hashtag'
+            search_t = '#'
             tweets = get_hashtag_tweets(form.query.data)
 
         #if rate limit was exceeded print message
@@ -106,10 +108,10 @@ def home():
 
             # Create a circle for the center of the plot
             # change color to = color of background to give illusion of transparency
-            my_circle=plt.Circle( (0,0), 0.7, color='#c0deed', linewidth = 2, ls = '-', ec = 'white' )
+            my_circle=plt.Circle( (0,0), 0.7, color='white', linewidth = 1, ls = '-', ec = 'white' )
 
             # Give color names and set wedge properites
-            plt.pie(size, labels=names, colors=['skyblue','blue'], wedgeprops = { 'linewidth' : 2, 'edgecolor' : 'white' })
+            plt.pie(size, labels = names, labeldistance=1.1, colors=['skyblue','#0084b4'], wedgeprops = { 'linewidth' : 4, 'edgecolor' : 'white' })
             p=plt.gcf()
             p.gca().add_artist(my_circle)
 
@@ -120,14 +122,18 @@ def home():
             img.seek(0)
             donut_url = base64.b64encode(img.getvalue()).decode('utf8')
 
+            new_score = (result['score'] + 1) * 100 / 2
+            new_score = round(new_score, 1)
+
             # Use flash messages to display validation errors and stuff
             return render_template('index.html',
                                  form=form,
                                  data=form.query.data,
-                                 score=result['score'],
+                                 search_type = search_t,
+                                 score=new_score,
                                  posTweet = tweets['tweet'][result['posIndex']],
                                  negTweet =tweets['tweet'][result['negIndex']],
-                                 donut_url=donut_url
+                                 donut_url='data:image/png;base64,'+ donut_url
                                  )
 
 
