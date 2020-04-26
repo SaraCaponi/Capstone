@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, send_from_directory
 from app import application
 from app.forms import SearchForm
 from .TweepyFunctions import *
@@ -13,13 +13,17 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
-
-
+import os
 
 cluster = MongoClient(database_connect)
 db = cluster["DSS"]
 collection = db["Search_Records"]
 LBcollection = db["Leaderboard_Cache"]
+
+
+@application.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(application.root_path, 'static'),'favicon.ico',mimetype='image/vnd.microsof.icon')
 
 
 @application.route('/', methods=['GET', 'POST'])
